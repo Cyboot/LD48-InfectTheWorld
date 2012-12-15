@@ -14,6 +14,8 @@ public class Game {
 	}
 
 	public void update(int delta) {
+		//TODO: 09. Animation zwischen Leveln
+		
 		if (currentLevel.isFinished()) {
 			levelNr++;
 

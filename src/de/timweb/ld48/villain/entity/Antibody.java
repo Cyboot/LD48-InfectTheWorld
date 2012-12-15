@@ -26,6 +26,7 @@ public class Antibody extends Entity {
 
 	@Override
 	public void update(int delta) {
+		//TODO: 03. AI, Virenjagen, festhalten
 		double dx = direction.x * delta * speed;
 		double dy = direction.y * delta * speed;
 

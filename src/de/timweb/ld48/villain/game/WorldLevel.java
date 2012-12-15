@@ -6,13 +6,11 @@ public class WorldLevel extends Level {
 
 	@Override
 	public void update(int delta) {
-		// TODO Auto-generated method stub
-
+		//TODO: 10. Worldlevel
 	}
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
 
 	}
 

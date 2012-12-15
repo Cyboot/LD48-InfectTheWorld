@@ -21,9 +21,14 @@ public class WhiteCell extends Entity {
 
 	@Override
 	public void update(int delta) {
+		//TODO: 02. AI, Viren jagen wenn innerhalb Radius
+		//TODO: 08. werden schwächen wenn viren gefressen
+		
 		double dx = direction.x * delta * speed;
 		double dy = direction.y * delta * speed;
 
+		
+		
 		pos.add(dx, dy);
 
 		if (pos.x < 0 || pos.x > VillainCanvas.WIDTH) {

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 public class SelectRect {
+	//TODO: 01. Viren markieren etc...
 	public static final SelectRect s = new SelectRect();
 	
 	private final Color color = Color.orange;
