@@ -1,26 +1,23 @@
-package de.timweb.ld48.villain.entity;
+package de.timweb.ld48.villain.util;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import de.timweb.ld48.villain.entity.Entity;
 import de.timweb.ld48.villain.game.VillainCanvas;
-import de.timweb.ld48.villain.util.ImageLoader;
-import de.timweb.ld48.villain.util.Vector2d;
 
-public class Antibody extends Entity {
-	private static final int MAX_FLICKER = 300;
+public class Virus extends Entity {
 	private BufferedImage img;
 	private Vector2d direction;
 	private int size = 8;
-	private double speed = 0.03;
-	private int flicker;
-	
-	public Antibody(Vector2d pos) {
+	private double speed = 0.05;
+
+	public Virus(Vector2d pos) {
 		super(pos);
 
-		flicker = (int) (Math.random()*1000);
-		
-		img = ImageLoader.anti_16_green;
+		img = ImageLoader.getVirusImage((int) (Math.random() * 6),
+				(int) (Math.random() * 6), 16);
+
 		direction = Vector2d.randomNormalized();
 	}
 
@@ -42,21 +39,12 @@ public class Antibody extends Entity {
 			pos.add(0, dy);
 		}
 
-		
-		flicker += delta;
-		if(flicker > MAX_FLICKER){
-			flicker = - MAX_FLICKER / 2;
-		}
-		
+
 	}
 
 	@Override
 	public void render(Graphics g) {
-		if(flicker < 0)
-			return;
-		
-		
-		g.drawImage(img, pos.x()-size, pos.y()-size, null);
+		g.drawImage(img, pos.x() - size, pos.y() - size, null);
 	}
 
 }

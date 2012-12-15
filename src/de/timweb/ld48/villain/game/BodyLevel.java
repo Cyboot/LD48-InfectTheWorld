@@ -12,17 +12,20 @@ import de.timweb.ld48.villain.entity.RedCell;
 import de.timweb.ld48.villain.entity.WhiteCell;
 import de.timweb.ld48.villain.util.ImageLoader;
 import de.timweb.ld48.villain.util.Vector2d;
+import de.timweb.ld48.villain.util.Virus;
 
 public class BodyLevel extends Level {
 	private BufferedImage bgImg;
 	private List<Entity> whiteCells;
 	private List<Entity> antibody;
 	private List<Entity> redCells;
+	private List<Entity> virus;
 
 	public BodyLevel(int levelNr) {
 		whiteCells = new ArrayList<Entity>(100);
 		antibody = new ArrayList<Entity>(100);
 		redCells = new ArrayList<Entity>(100);
+		virus = new ArrayList<Entity>(100);
 
 		switch (levelNr) {
 		case 1:
@@ -39,7 +42,19 @@ public class BodyLevel extends Level {
 			break;
 		}
 
+		addVirus(50);
+		
 		SelectRect.s.setActive(true);
+	}
+
+	private void addVirus(int count) {
+		for (int i = 0; i < count; i++) {
+			double x = Math.random() * VillainCanvas.WIDTH;
+			double y = Math.random() * VillainCanvas.HEIGHT;
+			
+			virus.add(new Virus(new Vector2d(x, y)));
+		}
+		
 	}
 
 	private void addEnemys(int count) {
@@ -80,6 +95,9 @@ public class BodyLevel extends Level {
 		for(Entity e : redCells){
 			e.update(delta);
 		}
+		for(Entity e : virus){
+			e.update(delta);
+		}
 		
 		
 		
@@ -93,10 +111,13 @@ public class BodyLevel extends Level {
 			e.render(g);
 		}
 		for(Entity e : antibody){
-//			e.render(g);
+			e.render(g);
 		}
 		for(Entity e : whiteCells){
-//			e.render(g);
+			e.render(g);
+		}
+		for(Entity e : virus){
+			e.render(g);
 		}
 		
 		SelectRect.s.render(g);

@@ -2,6 +2,7 @@ package de.timweb.ld48.villain.util;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
@@ -24,7 +25,14 @@ public class ImageLoader {
 	
 	private static BufferedImage sprite_cell_anti_16;
 	private static BufferedImage sprite_cell_anti_64;
+	
+	private static BufferedImage sprite_virus_16;
+	private static BufferedImage sprite_virus_24;
+	private static BufferedImage sprite_virus_32;
 
+	private static HashMap<Integer, BufferedImage> virusMap = new HashMap<Integer, BufferedImage>();
+	
+	
 	public static void init() {
 		try {
 			System.out.println("loading Images... ");
@@ -37,6 +45,9 @@ public class ImageLoader {
 
 			sprite_cell_anti_16 = readImage("sprite_cell_anti_16.png");
 			sprite_cell_anti_64 = readImage("sprite_cell_anti_64.png");
+			sprite_virus_16 = readImage("sprite_virus_16.png");
+			sprite_virus_24 = readImage("sprite_virus_24.png");
+			sprite_virus_32 = readImage("sprite_virus_32.png");
 			
 			
 			//Spritesheets
@@ -50,6 +61,7 @@ public class ImageLoader {
 			
 			
 			
+			
 			System.out.println("finished loading Images");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -60,6 +72,42 @@ public class ImageLoader {
 		return ImageIO.read(VillainMain.class.getResource("/" + res));
 	}
 
+	/**
+	 * 
+	 * @param color (0 - red; 1 - yellow; 2 - green; 3 - cyan; 4 - blue; 5 - purple)
+	 * @param level 0-5
+	 * @param size 16,24,32
+	 * @return
+	 */
+	public static BufferedImage getVirusImage(int color, int level, int size){
+		int hash = (size << 16) + (color << 8) + level;
+		
+		BufferedImage img = virusMap.get(hash);
+		
+		//no Image of this Virus was found --> put in Map and return created Image
+		if(img == null){
+			int x = level % 3;
+			int y = level/3 + color * 2;
+			
+			switch (size) {
+			case 16:
+				img = getSubImage(sprite_virus_16, x, y, 16);
+				break;
+			case 24:
+				img = getSubImage(sprite_virus_24, x, y, 24);
+				break;
+			case 32:
+				img = getSubImage(sprite_virus_32, x, y, 32);
+				break;
+			}
+			
+			virusMap.put(hash, img);
+		}else
+			System.out.println("found");
+		
+		return img;
+	}
+	
 	public static BufferedImage getSubImage(BufferedImage img, int x, int y,
 			int width) {
 		return img.getSubimage(x * width, y * width, width, width);

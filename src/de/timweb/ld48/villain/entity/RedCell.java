@@ -11,7 +11,7 @@ public class RedCell extends Entity {
 	private BufferedImage img = ImageLoader.cell_red_16;
 	private Vector2d direction;
 	private int size = 8;
-	private double speed = 0.2;
+	private double speed = 0.1;
 
 	public RedCell(Vector2d pos) {
 		super(pos);
