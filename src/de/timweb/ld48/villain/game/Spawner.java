@@ -11,8 +11,9 @@ import de.timweb.ld48.villain.util.Virus;
 
 public class Spawner extends Entity{
 	public static final int MAX_SPAWN = 10*1000;
-
+	public static final int HEALTH = 10*1000;
 	
+	private int health = 10*  1000;
 	private BufferedImage img;
 	private int lastSpawn;
 	private int color = -1;
@@ -35,9 +36,9 @@ public class Spawner extends Entity{
 			BodyLevel level = (BodyLevel) Game.g.getCurrentLevel();
 		
 			if(color == -1){
-//				level.addWhiteCell(new WhiteCell(getPos().copy()));
+				level.addWhiteCell(new WhiteCell(getPos().copy()));
 			}else{
-//				level.addVirus(new Virus(getPos().copy(),color,3,16));
+				level.addVirus(new Virus(getPos().copy(),color,3,16));
 			}
 			
 		}
@@ -45,11 +46,11 @@ public class Spawner extends Entity{
 	}
 	
 	public void setColor(int color){
+		this.color = color;
 		if(color == -1){
 			img = ImageLoader.spawner_white;
 			return;
 		}
-		this.color = color;
 		int x = color % 3;
 		int y = color/3;
 		
@@ -59,6 +60,19 @@ public class Spawner extends Entity{
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(img, pos.x() - 16, pos.y() - 16, null);
+	}
+
+	public boolean isWhite() {
+		return color == -1;
+	}
+
+	public void attack(int delta, int color) {
+		health -= delta;
+		
+		if(health <= 0){
+			health = HEALTH;
+			setColor(color);
+		}
 	}
 
 }

@@ -18,6 +18,7 @@ public class Virus extends Entity {
 	private boolean isSelected;
 	private Vector2d target;
 	private Color color;
+	private int health = 1000;
 
 	public Virus(Vector2d pos, int color, int level, int size) {
 		super(pos);
@@ -57,26 +58,24 @@ public class Virus extends Entity {
 
 	@Override
 	public void update(int delta) {
-		if (target != null){
+		if (target != null) {
 			direction = target.copy().add(-pos.x, -pos.y).normalize();
-			if(target.distance(pos) < MIN_DISTANCE){
+			if (target.distance(pos) < MIN_DISTANCE) {
 				target = null;
 				speed = DEFAULT_SPEED;
 			}
-		}
-		else{
-			if(Math.random() < 0.02){
+		} else {
+			if (Math.random() < 0.02) {
 				direction.flipX();
 			}
-			if(Math.random() < 0.02){
+			if (Math.random() < 0.02) {
 				direction.flipY();
 			}
-			
+
 		}
 
 		double dx = direction.x * delta * speed;
 		double dy = direction.y * delta * speed;
-		
 
 		pos.add(dx, dy);
 
@@ -111,6 +110,19 @@ public class Virus extends Entity {
 		this.target = target;
 
 		speed = 10 * DEFAULT_SPEED;
+	}
+
+	@Override
+	protected void onKilled() {
+		// TODO: 91.a Sound + Effekt
+		System.out.println("Virus killed");
+	}
+	
+	public void hurt(int delta) {
+		health  -= delta;
+		if(health <= 0){
+			kill();
+		}
 	}
 
 }

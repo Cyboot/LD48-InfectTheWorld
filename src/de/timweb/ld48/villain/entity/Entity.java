@@ -28,6 +28,7 @@ public abstract class Entity {
 	
 	public void kill(){
 		isAlive = false;
+		onKilled();
 	}
 	
 	public boolean isAlive() {

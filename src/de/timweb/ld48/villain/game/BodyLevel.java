@@ -18,6 +18,7 @@ import de.timweb.ld48.villain.util.Virus;
 public class BodyLevel extends Level {
 	private int levelNr;
 	private BufferedImage bgImg;
+
 	private List<WhiteCell> whiteCells;
 	private List<Antibody> antibody;
 	private List<RedCell> redCells;
@@ -46,10 +47,11 @@ public class BodyLevel extends Level {
 			break;
 		}
 
+		addEnemys(1);
 		addSpawner();
-		
-		addVirus(10);
-		
+
+		addVirus(1);
+
 		SelectRect.s.setActive(true);
 	}
 
@@ -92,6 +94,8 @@ public class BodyLevel extends Level {
 
 			whiteCells.add(new WhiteCell(new Vector2d(x, y)));
 		}
+		if (true)
+			return;
 		for (int i = 0; i < count; i++) {
 			double x = Math.random() * VillainCanvas.WIDTH;
 			double y = Math.random() * VillainCanvas.HEIGHT;
@@ -113,47 +117,51 @@ public class BodyLevel extends Level {
 
 		}
 
-		if(Controls.c.wasLeftMouseClicked()){
+		if (Controls.c.wasLeftMouseClicked()) {
 			deselectVirus();
 		}
-		
+
 		if (SelectRect.s.isSelected()) {
-			 selectedVirus(SelectRect.s.getPointMin(),
+			selectedVirus(SelectRect.s.getPointMin(),
 					SelectRect.s.getPointMax());
 
 			SelectRect.s.reset();
 		}
-		
-		
+
 		if (!selectedVirus.isEmpty() && Controls.c.isRightMouseDown()) {
 			moveSelectedVirus(Controls.c.getMousePosRight());
 		}
 
-		for (Entity e : whiteCells) {
-			e.update(delta);
-		}
-		for (Entity e : antibody) {
-			e.update(delta);
-		}
-		for (Entity e : redCells) {
-			e.update(delta);
-		}
-		for (Entity e : virus) {
-			e.update(delta);
-		}
-		for (Entity e : spawner) {
-			e.update(delta);
-		}
+		updateEnities(whiteCells, delta);
+		updateEnities(redCells, delta);
+		updateEnities(antibody, delta);
+		updateEnities(virus, delta);
+		updateEnities(spawner, delta);
 
 	}
 
-	private void deselectVirus(){
+	private void updateEnities(List<? extends Entity> list, int delta) {
+		List<Entity> deadEntities = new ArrayList<Entity>();
+
+		for (Entity e : list) {
+			if (!e.isAlive()) {
+				deadEntities.add(e);
+				continue;
+			}
+			e.update(delta);
+		}
+		
+		//remove dead entities
+		list.removeAll(deadEntities);
+	}
+
+	private void deselectVirus() {
 		for (Virus v : virus) {
 			v.setSelected(false);
 		}
-		
+
 	}
-	
+
 	private void selectedVirus(Point min, Point max) {
 		selectedVirus = new ArrayList<Virus>();
 
@@ -168,16 +176,15 @@ public class BodyLevel extends Level {
 
 		}
 	}
-	
-	private void moveSelectedVirus(Point target){
+
+	private void moveSelectedVirus(Point target) {
 		Vector2d targetPos = new Vector2d(target.x, target.y);
-		for(Virus v:selectedVirus){
+		for (Virus v : selectedVirus) {
 			v.setTarget(targetPos);
 			v.setSelected(false);
 		}
 		selectedVirus = new ArrayList<Virus>();
 	}
-	
 
 	public void addWhiteCell(WhiteCell cell) {
 		whiteCells.add(cell);
@@ -187,27 +194,30 @@ public class BodyLevel extends Level {
 		this.virus.add(virus);
 	}
 
+	public List<Virus> getVirus() {
+		return virus;
+	}
+
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(bgImg, 0, 0, null);
 
-		for (Entity e : spawner) {
-			e.render(g);
-		}
-		for (Entity e : redCells) {
-			e.render(g);
-		}
-		for (Entity e : antibody) {
-			e.render(g);
-		}
-		for (Entity e : whiteCells) {
-			e.render(g);
-		}
-		for (Entity e : virus) {
-			e.render(g);
-		}
+		renderEntities(spawner, g);
+		renderEntities(redCells, g);
+		renderEntities(antibody, g);
+		renderEntities(whiteCells, g);
+		renderEntities(virus, g);
 
 		SelectRect.s.render(g);
 	}
 
+	public void renderEntities(List<? extends Entity> list, Graphics g) {
+		for (Entity e : list) {
+			e.render(g);
+		}
+	}
+
+	public List<Spawner> getSpawner() {
+		return spawner;
+	}
 }
