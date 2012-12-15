@@ -31,4 +31,8 @@ public class Game {
 		currentLevel.render(g);
 	}
 
+	public Level getCurrentLevel() {
+		return currentLevel;
+	}
+	
 }

@@ -39,7 +39,6 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void keyReleased(KeyEvent ke) {
-		System.out.println("key released: " + ke.getKeyCode());
 
 		switch (ke.getKeyCode()) {
 		case KeyEvent.VK_ENTER:
@@ -64,7 +63,6 @@ public class Controls implements MouseListener, KeyListener,
 
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
-			// System.out.println("clicked");
 			break;
 
 		default:
@@ -87,7 +85,6 @@ public class Controls implements MouseListener, KeyListener,
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			SelectRect.s.setPoint1(me.getPoint());
-			System.out.println("down");
 			break;
 
 		default:
@@ -101,7 +98,6 @@ public class Controls implements MouseListener, KeyListener,
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			SelectRect.s.released();
-			System.out.println("released: " + me.getButton());
 			break;
 
 		default:
@@ -112,7 +108,6 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mouseDragged(MouseEvent me) {
-		// System.out.println("dragged: "+me.getButton()+" - "+me.getPoint());
 		SelectRect.s.setPoint2(me.getPoint());
 
 	}

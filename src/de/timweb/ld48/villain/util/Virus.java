@@ -11,14 +11,16 @@ public class Virus extends Entity {
 	private Vector2d direction;
 	private int size = 8;
 	private double speed = 0.05;
+	
+	public Virus(Vector2d pos, int color, int level, int size){
+		super(pos);
+		
+		img = ImageLoader.getVirusImage(color, level, size);
+		direction = Vector2d.randomNormalized();
+	}
 
 	public Virus(Vector2d pos) {
-		super(pos);
-
-		img = ImageLoader.getVirusImage((int) (Math.random() * 6),
-				(int) (Math.random() * 6), 16);
-
-		direction = Vector2d.randomNormalized();
+		this(pos, (int)(Math.random() * 6),(int) (Math.random() * 6), 16);
 	}
 
 	@Override

@@ -15,6 +15,7 @@ public class ImageLoader {
 	public static BufferedImage cell_white_64;
 	public static BufferedImage cell_white_24;
 	public static BufferedImage cell_red_16;
+	public static BufferedImage spawner_white;
 	
 	public static BufferedImage anti_16_red;
 	public static BufferedImage anti_16_yellow;
@@ -29,6 +30,7 @@ public class ImageLoader {
 	private static BufferedImage sprite_virus_16;
 	private static BufferedImage sprite_virus_24;
 	private static BufferedImage sprite_virus_32;
+	public static BufferedImage sprite_spawner;
 
 	private static HashMap<Integer, BufferedImage> virusMap = new HashMap<Integer, BufferedImage>();
 	
@@ -42,19 +44,20 @@ public class ImageLoader {
 			cell_white_64 = readImage("cell_white_64.png");
 			cell_white_24 = readImage("cell_white_24.png");
 			cell_red_16 = readImage("cell_red_16.png");
+			spawner_white = readImage("spawner_white.png");
 
 			sprite_cell_anti_16 = readImage("sprite_cell_anti_16.png");
 			sprite_cell_anti_64 = readImage("sprite_cell_anti_64.png");
 			sprite_virus_16 = readImage("sprite_virus_16.png");
 			sprite_virus_24 = readImage("sprite_virus_24.png");
 			sprite_virus_32 = readImage("sprite_virus_32.png");
+			sprite_spawner = readImage("sprite_spawner.png");
 			
 			
 			//Spritesheets
 			anti_16_red = getSubImage(sprite_cell_anti_16, 0, 0, 16);
 			anti_16_yellow = getSubImage(sprite_cell_anti_16, 1, 0, 16);
 			anti_16_green = getSubImage(sprite_cell_anti_16, 2, 0, 16);
-			
 			anti_16_cyan = getSubImage(sprite_cell_anti_16, 0, 1, 16);
 			anti_16_blue = getSubImage(sprite_cell_anti_16, 1, 1, 16);
 			anti_16_purple = getSubImage(sprite_cell_anti_16, 2, 1, 16);
@@ -102,8 +105,7 @@ public class ImageLoader {
 			}
 			
 			virusMap.put(hash, img);
-		}else
-			System.out.println("found");
+		}
 		
 		return img;
 	}
