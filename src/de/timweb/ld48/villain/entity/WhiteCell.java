@@ -1,9 +1,9 @@
-package de.timweb.ld48.villain.game;
+package de.timweb.ld48.villain.entity;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import de.timweb.ld48.villain.entity.Entity;
+import de.timweb.ld48.villain.game.VillainCanvas;
 import de.timweb.ld48.villain.util.ImageLoader;
 import de.timweb.ld48.villain.util.Vector2d;
 

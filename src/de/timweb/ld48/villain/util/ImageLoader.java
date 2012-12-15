@@ -13,6 +13,7 @@ public class ImageLoader {
 	public static BufferedImage bg_body_heart;
 	public static BufferedImage cell_white_64;
 	public static BufferedImage cell_white_24;
+	public static BufferedImage cell_red_16;
 	
 	public static BufferedImage anti_16_red;
 	public static BufferedImage anti_16_yellow;
@@ -32,6 +33,7 @@ public class ImageLoader {
 			bg_body_heart = readImage("bg_body_heart.png");
 			cell_white_64 = readImage("cell_white_64.png");
 			cell_white_24 = readImage("cell_white_24.png");
+			cell_red_16 = readImage("cell_red_16.png");
 
 			sprite_cell_anti_16 = readImage("sprite_cell_anti_16.png");
 			sprite_cell_anti_64 = readImage("sprite_cell_anti_64.png");

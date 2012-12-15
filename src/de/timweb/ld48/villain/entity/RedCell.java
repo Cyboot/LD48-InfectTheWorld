@@ -1,23 +1,27 @@
-package de.timweb.ld48.villain.game;
+package de.timweb.ld48.villain.entity;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import de.timweb.ld48.villain.entity.Entity;
+import de.timweb.ld48.villain.game.VillainCanvas;
 import de.timweb.ld48.villain.util.ImageLoader;
 import de.timweb.ld48.villain.util.Vector2d;
 
-public class Antibody extends Entity {
-	private BufferedImage img;
+public class RedCell extends Entity {
+	private BufferedImage img = ImageLoader.cell_red_16;
 	private Vector2d direction;
 	private int size = 8;
-	private double speed = 0.03;
+	private double speed = 0.2;
 
-	public Antibody(Vector2d pos) {
+	public RedCell(Vector2d pos) {
 		super(pos);
 
-		img = ImageLoader.anti_16_green;
 		direction = Vector2d.randomNormalized();
+		if(direction.x < 0)
+			direction.flipX();
+		if(direction.y < 0)
+			direction.flipY();
+		
 	}
 
 	@Override
@@ -27,15 +31,11 @@ public class Antibody extends Entity {
 
 		pos.add(dx, dy);
 
-		if (pos.x < 0 || pos.x > VillainCanvas.WIDTH) {
-			direction.flipX();
-			dx = direction.x * delta;
-			pos.add(dx, 0);
+		if (pos.x > VillainCanvas.WIDTH) {
+			pos.set(-size, pos.y);
 		}
-		if (pos.y < 0 || pos.y > VillainCanvas.HEIGHT) {
-			direction.flipY();
-			dy = direction.y * delta;
-			pos.add(0, dy);
+		if (pos.y > VillainCanvas.HEIGHT) {
+			pos.set(pos.x, -size);
 		}
 
 	}

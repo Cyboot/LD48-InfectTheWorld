@@ -6,7 +6,10 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.timweb.ld48.villain.entity.Antibody;
 import de.timweb.ld48.villain.entity.Entity;
+import de.timweb.ld48.villain.entity.RedCell;
+import de.timweb.ld48.villain.entity.WhiteCell;
 import de.timweb.ld48.villain.util.ImageLoader;
 import de.timweb.ld48.villain.util.Vector2d;
 
@@ -14,10 +17,12 @@ public class BodyLevel extends Level {
 	private BufferedImage bgImg;
 	private List<Entity> whiteCells;
 	private List<Entity> antibody;
+	private List<Entity> redCells;
 
 	public BodyLevel(int levelNr) {
 		whiteCells = new ArrayList<Entity>(100);
 		antibody = new ArrayList<Entity>(100);
+		redCells = new ArrayList<Entity>(100);
 
 		switch (levelNr) {
 		case 1:
@@ -50,6 +55,12 @@ public class BodyLevel extends Level {
 			
 			antibody.add(new Antibody(new Vector2d(x, y)));
 		}
+		for (int i = 0; i < count; i++) {
+			double x = Math.random() * VillainCanvas.WIDTH;
+			double y = Math.random() * VillainCanvas.HEIGHT;
+			
+			redCells.add(new RedCell(new Vector2d(x, y)));
+		}
 	}
 
 	@Override
@@ -66,6 +77,9 @@ public class BodyLevel extends Level {
 		for(Entity e : antibody){
 			e.update(delta);
 		}
+		for(Entity e : redCells){
+			e.update(delta);
+		}
 		
 		
 		
@@ -75,11 +89,14 @@ public class BodyLevel extends Level {
 	public void render(Graphics g) {
 		g.drawImage(bgImg, 0, 0, null);
 
-		for(Entity e : antibody){
+		for(Entity e : redCells){
 			e.render(g);
 		}
+		for(Entity e : antibody){
+//			e.render(g);
+		}
 		for(Entity e : whiteCells){
-			e.render(g);
+//			e.render(g);
 		}
 		
 		SelectRect.s.render(g);
