@@ -1,6 +1,7 @@
 package de.timweb.ld48.villain.game;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class BodyLevel extends Level {
 	private List<Virus> virus;
 	private List<Spawner> spawner;
 
+	private List<Virus> selectedVirus = new ArrayList<Virus>();
+
 	public BodyLevel(int levelNr) {
 		this.levelNr = levelNr;
 		whiteCells = new ArrayList<WhiteCell>(100);
@@ -44,7 +47,9 @@ public class BodyLevel extends Level {
 		}
 
 		addSpawner();
-
+		
+		addVirus(10);
+		
 		SelectRect.s.setActive(true);
 	}
 
@@ -108,6 +113,22 @@ public class BodyLevel extends Level {
 
 		}
 
+		if(Controls.c.wasLeftMouseClicked()){
+			deselectVirus();
+		}
+		
+		if (SelectRect.s.isSelected()) {
+			 selectedVirus(SelectRect.s.getPointMin(),
+					SelectRect.s.getPointMax());
+
+			SelectRect.s.reset();
+		}
+		
+		
+		if (!selectedVirus.isEmpty() && Controls.c.isRightMouseDown()) {
+			moveSelectedVirus(Controls.c.getMousePosRight());
+		}
+
 		for (Entity e : whiteCells) {
 			e.update(delta);
 		}
@@ -125,6 +146,38 @@ public class BodyLevel extends Level {
 		}
 
 	}
+
+	private void deselectVirus(){
+		for (Virus v : virus) {
+			v.setSelected(false);
+		}
+		
+	}
+	
+	private void selectedVirus(Point min, Point max) {
+		selectedVirus = new ArrayList<Virus>();
+
+		for (Virus v : virus) {
+			Vector2d pos = v.getPos();
+
+			if (pos.x > min.x && pos.x < max.x && pos.y > min.y
+					&& pos.y < max.y) {
+				selectedVirus.add(v);
+				v.setSelected(true);
+			}
+
+		}
+	}
+	
+	private void moveSelectedVirus(Point target){
+		Vector2d targetPos = new Vector2d(target.x, target.y);
+		for(Virus v:selectedVirus){
+			v.setTarget(targetPos);
+			v.setSelected(false);
+		}
+		selectedVirus = new ArrayList<Virus>();
+	}
+	
 
 	public void addWhiteCell(WhiteCell cell) {
 		whiteCells.add(cell);

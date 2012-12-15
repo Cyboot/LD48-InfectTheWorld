@@ -1,5 +1,6 @@
 package de.timweb.ld48.villain.game;
 
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -12,7 +13,12 @@ public class Controls implements MouseListener, KeyListener,
 
 	private boolean ok_pressed;
 	private boolean space_pressed;
+	private Point mousePos_right;
+	private Point mousePos_left;
 
+	private boolean leftMouse_clicked;
+	
+	
 	public boolean wasKeyPressed(int code) {
 		boolean result = false;
 		switch (code) {
@@ -60,11 +66,11 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mouseClicked(MouseEvent me) {
-
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			break;
 
+			
 		default:
 			break;
 		}
@@ -85,6 +91,8 @@ public class Controls implements MouseListener, KeyListener,
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			SelectRect.s.setPoint1(me.getPoint());
+			mousePos_left = me.getPoint();
+			leftMouse_clicked = true;
 			break;
 
 		default:
@@ -98,6 +106,11 @@ public class Controls implements MouseListener, KeyListener,
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			SelectRect.s.released();
+			mousePos_right = null;
+			break;
+		case MouseEvent.BUTTON3:
+			mousePos_right = me.getPoint();
+//			System.out.println("right");
 			break;
 
 		default:
@@ -117,4 +130,23 @@ public class Controls implements MouseListener, KeyListener,
 
 	}
 
+	public boolean isRightMouseDown() {
+		return mousePos_right != null;
+	}
+	public boolean isLeftMouseDown() {
+		return mousePos_left != null;
+	}
+	public Point getMousePosRight(){
+		return mousePos_right;
+	}
+	public Point getMousePosLeft(){
+		return mousePos_left;
+	}
+
+	public boolean wasLeftMouseClicked() {
+		boolean result = leftMouse_clicked;
+		leftMouse_clicked = false;
+		return result;
+	}
+	
 }

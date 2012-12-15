@@ -35,9 +35,9 @@ public class Spawner extends Entity{
 			BodyLevel level = (BodyLevel) Game.g.getCurrentLevel();
 		
 			if(color == -1){
-				level.addWhiteCell(new WhiteCell(getPos().copy()));
+//				level.addWhiteCell(new WhiteCell(getPos().copy()));
 			}else{
-				level.addVirus(new Virus(getPos().copy(),color,3,16));
+//				level.addVirus(new Virus(getPos().copy(),color,3,16));
 			}
 			
 		}
