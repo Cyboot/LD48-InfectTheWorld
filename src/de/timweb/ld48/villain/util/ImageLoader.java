@@ -24,7 +24,19 @@ public class ImageLoader {
 	public static BufferedImage button_hover;
 	public static BufferedImage button_normal;
 	public static BufferedImage button_pressed;
-	
+
+	public static BufferedImage bg_world;
+	public static BufferedImage top_world;
+
+	public static BufferedImage world_africa;
+	public static BufferedImage world_australia;
+	public static BufferedImage world_brasilien;
+	public static BufferedImage world_china;
+	public static BufferedImage world_europa;
+	public static BufferedImage world_madagaskar;
+	public static BufferedImage world_russland;
+	public static BufferedImage world_usa;
+
 	public static BufferedImage human_level1_1;
 	public static BufferedImage human_level1_2;
 	public static BufferedImage human_level2_1;
@@ -60,7 +72,19 @@ public class ImageLoader {
 			button_hover = readImage("button_hover.png");
 			button_normal = readImage("button_normal.png");
 			button_pressed = readImage("button_pressed.png");
-			
+
+			// Worldlevel
+			bg_world = readImage("bg_world.png");
+			top_world = readImage("top_world.png");
+			world_africa = readImage("world_africa.png");
+			world_australia = readImage("world_australia.png");
+			world_brasilien = readImage("world_brasilien.png");
+			world_china = readImage("world_china.png");
+			world_europa = readImage("world_europa.png");
+			world_madagaskar = readImage("world_madagaskar.png");
+			world_russland = readImage("world_russland.png");
+			world_usa = readImage("world_usa.png");
+
 			human_level1_1 = readImage("human_level1_1.png");
 			human_level1_2 = readImage("human_level1_2.png");
 			human_level2_1 = human_level1_2;
@@ -98,17 +122,17 @@ public class ImageLoader {
 	 */
 	public static BufferedImage getVirusImage(int color, int level) {
 		int size = 16;
-		
-		//Dirty diry hack
-		if (level >= 6){
+
+		// Dirty diry hack
+		if (level >= 6) {
 			size = 24;
 			level -= 6;
 		}
-		if (level >= 6){
+		if (level >= 6) {
 			size = 32;
 			level -= 6;
 		}
-		
+
 		int hash = (size << 16) + (color << 8) + level;
 
 		BufferedImage img = virusMap.get(hash);

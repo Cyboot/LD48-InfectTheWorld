@@ -6,13 +6,12 @@ public class WinLevel extends Level {
 
 	@Override
 	public void update(int delta) {
-		// TODO Auto-generated method stub
+		// TODO: 11. Winlevel
 
 	}
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
 
 	}
 

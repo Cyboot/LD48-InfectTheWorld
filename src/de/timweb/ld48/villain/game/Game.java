@@ -9,28 +9,28 @@ public class Game {
 	private int levelNr = 1;
 
 	public Game() {
-		currentLevel = new AnimationLevel(levelNr);
+
+		currentLevel = new WorldLevel();
+		// currentLevel = new AnimationLevel(levelNr);
 	}
 
 	public void update(int delta) {
-		// TODO: 09. Animation zwischen Leveln
 
 		if (currentLevel.isFinished()) {
-			//Player won --> no more Level
-			if(currentLevel instanceof WinLevel){
+			// Player won --> no more Level
+			if (currentLevel instanceof WinLevel) {
 				return;
 			}
-			
-			//Player finished Worldlevel --> win
-			if(currentLevel instanceof WorldLevel){
+
+			// Player finished Worldlevel --> win
+			if (currentLevel instanceof WorldLevel) {
 				currentLevel = new WinLevel();
 			}
-			
-			
+
 			if (currentLevel instanceof AnimationLevel) {
-				if(levelNr > 3){
+				if (levelNr > 3) {
 					currentLevel = new WorldLevel();
-				}else{
+				} else {
 					currentLevel = new BodyLevel(levelNr++);
 				}
 			} else {

@@ -77,6 +77,7 @@ public class Gui {
 	}
 
 	public void drawText(int time, String... text) {
+		SoundEffect.TALK.play();
 		isWriting = true;
 		timePassed = 0;
 		textTimeLeft = time;
