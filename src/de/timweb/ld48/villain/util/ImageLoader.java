@@ -24,6 +24,13 @@ public class ImageLoader {
 	public static BufferedImage button_hover;
 	public static BufferedImage button_normal;
 	public static BufferedImage button_pressed;
+	
+	public static BufferedImage human_level1_1;
+	public static BufferedImage human_level1_2;
+	public static BufferedImage human_level2_1;
+	public static BufferedImage human_level2_2;
+	public static BufferedImage human_level3_1;
+	public static BufferedImage human_level3_2;
 
 	public static BufferedImage sprite_cell_anti_16;
 	// private static BufferedImage sprite_cell_anti_64;
@@ -53,6 +60,13 @@ public class ImageLoader {
 			button_hover = readImage("button_hover.png");
 			button_normal = readImage("button_normal.png");
 			button_pressed = readImage("button_pressed.png");
+			
+			human_level1_1 = readImage("human_level1_1.png");
+			human_level1_2 = readImage("human_level1_2.png");
+			human_level2_1 = human_level1_2;
+			human_level2_2 = readImage("human_level2_2.png");
+			human_level3_1 = human_level2_2;
+			human_level3_2 = readImage("human_level3_2.png");
 
 			sprite_cell_anti_16 = readImage("sprite_cell_anti_16.png");
 			// sprite_cell_anti_64 = readImage("sprite_cell_anti_64.png");

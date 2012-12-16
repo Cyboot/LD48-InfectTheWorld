@@ -11,13 +11,19 @@ import de.timweb.ld48.villain.entity.Antibody;
 import de.timweb.ld48.villain.entity.Entity;
 import de.timweb.ld48.villain.entity.RedCell;
 import de.timweb.ld48.villain.entity.WhiteCell;
+import de.timweb.ld48.villain.util.Gui;
 import de.timweb.ld48.villain.util.ImageLoader;
 import de.timweb.ld48.villain.util.Vector2d;
 import de.timweb.ld48.villain.util.Virus;
 
 public class BodyLevel extends Level {
+	private static final int FINISH_TIMELEFT = 15 * 1000;
+
 	private int levelNr;
 	private BufferedImage bgImg;
+
+	private boolean isFinished = false;
+	private int finishedTimeleft = FINISH_TIMELEFT;
 
 	private List<WhiteCell> whiteCells;
 	private List<Antibody> antibody;
@@ -71,15 +77,21 @@ public class BodyLevel extends Level {
 
 		switch (levelNr) {
 		case 1:
+			spawner.add(new Spawner(new Vector2d(w * 0.4, h * 0.3), -1));
+			spawner.add(new Spawner(new Vector2d(w * 0.8, h * 0.7), -1));
+
+			break;
+		case 2:
 			spawner.add(new Spawner(new Vector2d(w * 0.3, h * 0.3), -1));
 			spawner.add(new Spawner(new Vector2d(w * 0.7, h * 0.2), -1));
 			spawner.add(new Spawner(new Vector2d(w * 0.9, h * 0.7), -1));
 
 			break;
-		case 2:
-
-			break;
 		case 3:
+			spawner.add(new Spawner(new Vector2d(w * 0.2, h * 0.2), -1));
+			spawner.add(new Spawner(new Vector2d(w * 0.3, h * 0.5), -1));
+			spawner.add(new Spawner(new Vector2d(w * 0.5, h * 0.5), -1));
+			spawner.add(new Spawner(new Vector2d(w * 0.8, h * 0.8), -1));
 
 			break;
 		}
@@ -94,28 +106,75 @@ public class BodyLevel extends Level {
 
 			whiteCells.add(new WhiteCell(new Vector2d(x, y)));
 		}
-//		for (int i = 0; i < count; i++) {
-//			double x = Math.random() * VillainCanvas.WIDTH;
-//			double y = Math.random() * VillainCanvas.HEIGHT;
-//
-//			antibody.add(new Antibody(new Vector2d(x, y),(int) (Math.random()*6)));
-//		}
-//		for (int i = 0; i < count; i++) {
-//			double x = Math.random() * VillainCanvas.WIDTH;
-//			double y = Math.random() * VillainCanvas.HEIGHT;
-//
-//			redCells.add(new RedCell(new Vector2d(x, y)));
-//		}
+		// for (int i = 0; i < count; i++) {
+		// double x = Math.random() * VillainCanvas.WIDTH;
+		// double y = Math.random() * VillainCanvas.HEIGHT;
+		//
+		// antibody.add(new Antibody(new Vector2d(x, y),(int)
+		// (Math.random()*6)));
+		// }
+		// for (int i = 0; i < count; i++) {
+		// double x = Math.random() * VillainCanvas.WIDTH;
+		// double y = Math.random() * VillainCanvas.HEIGHT;
+		//
+		// redCells.add(new RedCell(new Vector2d(x, y)));
+		// }
 	}
 
 	@Override
 	public void update(int delta) {
+
+		// check if there are white spawner in this level
+		boolean isWhiteSpawner = false;
+		for (Spawner s : spawner) {
+			if (s.isWhite())
+				isWhiteSpawner = true;
+		}
+
+		// DEBUG
+		isWhiteSpawner = false;
+
+		// no more Whitespawner --> Player won
+		if (!isWhiteSpawner && !isFinished) {
+			switch (levelNr) {
+			case 1:
+				Gui.g.drawText(FINISH_TIMELEFT,
+						"Congratulations! You won this Level",
+						"You infectecd this human.",
+						"Move on to the next organ, the liver");
+				break;
+			case 2:
+				Gui.g.drawText(FINISH_TIMELEFT,
+						"Congratulations! You won this Level",
+						"You destroyed the liver.",
+						"Now go and finish the human by ",
+						"destroying his heart!");
+				break;
+			case 3:
+				Gui.g.drawText(FINISH_TIMELEFT,
+						"Congratulations! You won this Level",
+						"You killed the man, good job!",
+						"Now...   Let's go bigger...    Much bigger...");
+				break;
+			}
+			isFinished = true;
+		}
+
+		if (!isWhiteSpawner) {
+			finishedTimeleft -= delta;
+		}
+
+		// finish the Level afer timeleft
+		if (finishedTimeleft < 0) {
+			finish();
+		}
+
 		if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER)) {
 			finish();
 		}
-		//DEBUG
-		if(Controls.c.wasKeyPressed(KeyEvent.VK_L)){
-			Virus.setLevel(Virus.getLevel()+1);
+		// DEBUG
+		if (Controls.c.wasKeyPressed(KeyEvent.VK_L)) {
+			Virus.setLevel(Virus.getLevel() + 1);
 		}
 
 		if (Controls.c.wasLeftMouseClicked()) {
@@ -139,7 +198,6 @@ public class BodyLevel extends Level {
 		updateEnities(virus, delta);
 		updateEnities(spawner, delta);
 
-		
 		Player.addMoneyDelta(delta);
 	}
 
@@ -153,8 +211,8 @@ public class BodyLevel extends Level {
 			}
 			e.update(delta);
 		}
-		
-		//remove dead entities
+
+		// remove dead entities
 		list.removeAll(deadEntities);
 	}
 

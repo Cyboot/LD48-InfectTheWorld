@@ -9,20 +9,35 @@ public class Game {
 	private int levelNr = 1;
 
 	public Game() {
-		currentLevel = new BodyLevel(levelNr);
-
+		currentLevel = new AnimationLevel(levelNr);
 	}
 
 	public void update(int delta) {
-		//TODO: 09. Animation zwischen Leveln
-		
-		if (currentLevel.isFinished()) {
-			levelNr++;
+		// TODO: 09. Animation zwischen Leveln
 
-			if (levelNr == 2 || levelNr == 3)
-				currentLevel = new BodyLevel(levelNr);
-			else
-				currentLevel = new WorldLevel();
+		if (currentLevel.isFinished()) {
+			//Player won --> no more Level
+			if(currentLevel instanceof WinLevel){
+				return;
+			}
+			
+			//Player finished Worldlevel --> win
+			if(currentLevel instanceof WorldLevel){
+				currentLevel = new WinLevel();
+			}
+			
+			
+			if (currentLevel instanceof AnimationLevel) {
+				if(levelNr > 3){
+					currentLevel = new WorldLevel();
+				}else{
+					currentLevel = new BodyLevel(levelNr++);
+				}
+			} else {
+				currentLevel = new AnimationLevel(levelNr);
+				return;
+			}
+
 		}
 		currentLevel.update(delta);
 
@@ -36,5 +51,5 @@ public class Game {
 	public Level getCurrentLevel() {
 		return currentLevel;
 	}
-	
+
 }

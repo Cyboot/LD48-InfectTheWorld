@@ -13,7 +13,7 @@ public class Gui {
 
 	private static final int MAX_TIME = 4000;
 
-	private static final int TEXT_DISPLAY_TIME = 10 * 1000;
+	private static final int TEXT_DISPLAY_TIME = 14 * 1000;
 
 	private String[] texts;
 	private int[] curserPositions;
@@ -26,6 +26,8 @@ public class Gui {
 
 	private int textTimeLeft;
 
+	private boolean isScoreboardShown;
+
 	public void update(int delta) {
 		if (isWriting)
 			writeText(delta);
@@ -36,7 +38,7 @@ public class Gui {
 			texts = null;
 			curserPositions = null;
 		}
-		
+
 		Button.spawnrate.update(delta);
 		Button.speed.update(delta);
 		Button.strenght.update(delta);
@@ -55,7 +57,7 @@ public class Gui {
 			if (written < len) {
 				curserPositions[i] = written;
 			} else {
-				curserPositions[i] = len - 1;
+				curserPositions[i] = len;
 			}
 
 			written -= len;
@@ -71,9 +73,13 @@ public class Gui {
 	}
 
 	public void drawText(String... text) {
+		drawText(TEXT_DISPLAY_TIME, text);
+	}
+
+	public void drawText(int time, String... text) {
 		isWriting = true;
 		timePassed = 0;
-		textTimeLeft = TEXT_DISPLAY_TIME;
+		textTimeLeft = time;
 		length = 0;
 		for (String str : text) {
 			length += str.length();
@@ -93,18 +99,10 @@ public class Gui {
 				System.err.println("Antialias failed for displaying the Font");
 			}
 		}
-		
-		g.drawImage(ImageLoader.scoreboard, VillainCanvas.WIDTH - 150, 0, null);
 
-		g.setColor(Color.white);
-		g.setFont(VillainCanvas.font_Big);
-		g.drawString("$ "+Player.getMoney(), VillainCanvas.WIDTH - 130, 30);
-		
-		Button.strenght.render(g);
-		Button.speed.render(g);
-		Button.spawnrate.render(g);
-		
-		
+		if (isScoreboardShown)
+			renderScoreBoard(g);
+
 		if (!isWriting && !showText)
 			return;
 
@@ -117,12 +115,23 @@ public class Gui {
 		g.drawImage(ImageLoader.villain, 0, 0, null);
 		g.drawImage(ImageLoader.speech, 0, 0, null);
 
-
 		g.setColor(Color.white);
 		g.setFont(VillainCanvas.font);
 
 		renderText(g);
 
+	}
+
+	private void renderScoreBoard(Graphics g) {
+		g.drawImage(ImageLoader.scoreboard, VillainCanvas.WIDTH - 150, 0, null);
+
+		g.setColor(Color.white);
+		g.setFont(VillainCanvas.font_Big);
+		g.drawString("$ " + Player.getMoney(), VillainCanvas.WIDTH - 130, 30);
+
+		Button.strenght.render(g);
+		Button.speed.render(g);
+		Button.spawnrate.render(g);
 	}
 
 	private void renderText(Graphics g) {
@@ -139,4 +148,15 @@ public class Gui {
 
 	}
 
+	public void hideScoreBoard() {
+		isScoreboardShown = false;
+	}
+
+	public void showScoreBoard() {
+		isScoreboardShown = true;
+	}
+
+	public boolean isScoreboardShown() {
+		return isScoreboardShown;
+	}
 }

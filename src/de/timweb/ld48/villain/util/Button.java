@@ -35,6 +35,10 @@ public class Button {
 	}
 
 	public void update(int delta) {
+		//Button is now shown --> don't update
+		if(!Gui.g.isScoreboardShown())
+			return;
+		
 		Point pos = Controls.c.getCurrentMousePos();
 
 		if (cost > Player.getMoney()) {
