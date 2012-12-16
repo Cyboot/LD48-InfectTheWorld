@@ -4,10 +4,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import de.timweb.ld48.villain.game.BodyLevel;
 import de.timweb.ld48.villain.game.Game;
 import de.timweb.ld48.villain.game.Spawner;
 import de.timweb.ld48.villain.game.VillainCanvas;
+import de.timweb.ld48.villain.level.BodyLevel;
 import de.timweb.ld48.villain.util.ImageLoader;
 import de.timweb.ld48.villain.util.Vector2d;
 import de.timweb.ld48.villain.util.Virus;

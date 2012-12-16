@@ -1,4 +1,4 @@
-package de.timweb.ld48.villain.game;
+package de.timweb.ld48.villain.level;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -11,6 +11,12 @@ import de.timweb.ld48.villain.entity.Antibody;
 import de.timweb.ld48.villain.entity.Entity;
 import de.timweb.ld48.villain.entity.RedCell;
 import de.timweb.ld48.villain.entity.WhiteCell;
+import de.timweb.ld48.villain.game.Controls;
+import de.timweb.ld48.villain.game.Level;
+import de.timweb.ld48.villain.game.Player;
+import de.timweb.ld48.villain.game.SelectRect;
+import de.timweb.ld48.villain.game.Spawner;
+import de.timweb.ld48.villain.game.VillainCanvas;
 import de.timweb.ld48.villain.util.Gui;
 import de.timweb.ld48.villain.util.ImageLoader;
 import de.timweb.ld48.villain.util.Vector2d;
@@ -42,6 +48,9 @@ public class BodyLevel extends Level {
 		spawner = new ArrayList<Spawner>(20);
 
 		switch (levelNr) {
+		case 0:
+			bgImg = ImageLoader.bg_body_liver;
+			break;
 		case 1:
 			bgImg = ImageLoader.bg_body_mouth;
 			break;
@@ -56,9 +65,11 @@ public class BodyLevel extends Level {
 		addEnemys(1);
 		addSpawner();
 
-		addVirus(1);
+		if(levelNr == 0)
+			addVirus(10);
 
 		SelectRect.s.setActive(true);
+		Gui.g.showScoreBoard();
 	}
 
 	private void addVirus(int count) {
@@ -79,7 +90,6 @@ public class BodyLevel extends Level {
 		case 1:
 			spawner.add(new Spawner(new Vector2d(w * 0.4, h * 0.3), -1));
 			spawner.add(new Spawner(new Vector2d(w * 0.8, h * 0.7), -1));
-
 			break;
 		case 2:
 			spawner.add(new Spawner(new Vector2d(w * 0.3, h * 0.3), -1));
@@ -87,6 +97,7 @@ public class BodyLevel extends Level {
 			spawner.add(new Spawner(new Vector2d(w * 0.9, h * 0.7), -1));
 
 			break;
+		case 0:
 		case 3:
 			spawner.add(new Spawner(new Vector2d(w * 0.2, h * 0.2), -1));
 			spawner.add(new Spawner(new Vector2d(w * 0.3, h * 0.5), -1));
@@ -131,16 +142,13 @@ public class BodyLevel extends Level {
 				isWhiteSpawner = true;
 		}
 
-		// DEBUG
-		isWhiteSpawner = false;
-
 		// no more Whitespawner --> Player won
-		if (!isWhiteSpawner && !isFinished) {
+		if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER) || (!isWhiteSpawner && !isFinished)) {
 			switch (levelNr) {
 			case 1:
 				Gui.g.drawText(FINISH_TIMELEFT,
 						"Congratulations! You won this Level",
-						"You infectecd this human.",
+						"You infected this human.",
 						"Move on to the next organ, the liver");
 				break;
 			case 2:
@@ -153,14 +161,16 @@ public class BodyLevel extends Level {
 			case 3:
 				Gui.g.drawText(FINISH_TIMELEFT,
 						"Congratulations! You won this Level",
-						"You killed the man, good job!",
+						"You killed the man, good job!","",
+						
+						
 						"Now...   Let's go bigger...    Much bigger...");
 				break;
 			}
 			isFinished = true;
 		}
 
-		if (!isWhiteSpawner) {
+		if (isFinished) {
 			finishedTimeleft -= delta;
 		}
 
@@ -169,9 +179,6 @@ public class BodyLevel extends Level {
 			finish();
 		}
 
-		if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER)) {
-			finish();
-		}
 		// DEBUG
 		if (Controls.c.wasKeyPressed(KeyEvent.VK_L)) {
 			Virus.setLevel(Virus.getLevel() + 1);
@@ -280,5 +287,12 @@ public class BodyLevel extends Level {
 
 	public List<Spawner> getSpawner() {
 		return spawner;
+	}
+	
+	@Override
+	protected void finish() {
+		super.finish();
+		
+		Gui.g.deleteText();
 	}
 }

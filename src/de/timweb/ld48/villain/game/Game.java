@@ -2,29 +2,35 @@ package de.timweb.ld48.villain.game;
 
 import java.awt.Graphics;
 
+import de.timweb.ld48.villain.level.AnimationLevel;
+import de.timweb.ld48.villain.level.BodyLevel;
+import de.timweb.ld48.villain.level.StartLevel;
+import de.timweb.ld48.villain.level.WorldLevel;
+
 public class Game {
 	public static final Game g = new Game();
 
 	private Level currentLevel;
 	private int levelNr = 1;
+	private int tutorial = 0;
 
 	public Game() {
 
-		currentLevel = new WorldLevel();
-		// currentLevel = new AnimationLevel(levelNr);
+		// currentLevel = new WorldLevel();
+		currentLevel = new StartLevel(tutorial++);
 	}
 
 	public void update(int delta) {
 
 		if (currentLevel.isFinished()) {
-			// Player won --> no more Level
-			if (currentLevel instanceof WinLevel) {
+			if (tutorial < 2) {
+				currentLevel = new StartLevel(tutorial++);
 				return;
 			}
 
-			// Player finished Worldlevel --> win
-			if (currentLevel instanceof WorldLevel) {
-				currentLevel = new WinLevel();
+			if (levelNr == 4) {
+				currentLevel = new WorldLevel();
+				return;
 			}
 
 			if (currentLevel instanceof AnimationLevel) {

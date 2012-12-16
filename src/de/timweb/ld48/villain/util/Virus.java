@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import de.timweb.ld48.villain.entity.Entity;
-import de.timweb.ld48.villain.game.BodyLevel;
 import de.timweb.ld48.villain.game.Game;
 import de.timweb.ld48.villain.game.Level;
 import de.timweb.ld48.villain.game.Spawner;
 import de.timweb.ld48.villain.game.VillainCanvas;
+import de.timweb.ld48.villain.level.BodyLevel;
 
 public class Virus extends Entity {
 	public static final int LEVELUP = 3;

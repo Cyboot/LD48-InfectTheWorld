@@ -160,4 +160,9 @@ public class Gui {
 	public boolean isScoreboardShown() {
 		return isScoreboardShown;
 	}
+
+	public void deleteText() {
+		textTimeLeft  = -10;
+		timePassed = MAX_TIME;
+	}
 }

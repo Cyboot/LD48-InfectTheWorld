@@ -24,6 +24,8 @@ public class ImageLoader {
 	public static BufferedImage button_hover;
 	public static BufferedImage button_normal;
 	public static BufferedImage button_pressed;
+	public static BufferedImage shade;
+	public static BufferedImage tutorial;
 
 	public static BufferedImage bg_world;
 	public static BufferedImage top_world;
@@ -72,6 +74,8 @@ public class ImageLoader {
 			button_hover = readImage("button_hover.png");
 			button_normal = readImage("button_normal.png");
 			button_pressed = readImage("button_pressed.png");
+			shade = readImage("shade.png");
+			tutorial = readImage("tutorial.png");
 
 			// Worldlevel
 			bg_world = readImage("bg_world.png");

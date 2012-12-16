@@ -1,4 +1,4 @@
-package de.timweb.ld48.villain.game;
+package de.timweb.ld48.villain.level;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 
+import de.timweb.ld48.villain.game.Level;
+import de.timweb.ld48.villain.game.VillainCanvas;
 import de.timweb.ld48.villain.util.Gui;
 import de.timweb.ld48.villain.util.ImageLoader;
 

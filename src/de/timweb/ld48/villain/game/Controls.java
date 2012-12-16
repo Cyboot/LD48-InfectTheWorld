@@ -8,7 +8,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import de.timweb.ld48.villain.util.Gui;
-import de.timweb.ld48.villain.util.Virus;
 
 public class Controls implements MouseListener, KeyListener,
 		MouseMotionListener {
@@ -83,7 +82,7 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mouseClicked(MouseEvent me) {
-		System.out.println("clicked "+me.getButton());
+//		System.out.println("clicked "+me.getButton());
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			leftMouse_up = true;
@@ -105,7 +104,7 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mousePressed(MouseEvent me) {
-		System.out.println("mouse pressed");
+//		System.out.println("mouse pressed");
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			SelectRect.s.setPoint1(me.getPoint());
@@ -122,7 +121,7 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mouseReleased(MouseEvent me) {
-		System.out.println("released: "+me.getButton());
+//		System.out.println("released: "+me.getButton());
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			SelectRect.s.released();

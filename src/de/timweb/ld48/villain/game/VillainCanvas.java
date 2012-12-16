@@ -28,6 +28,7 @@ public class VillainCanvas extends Canvas implements Runnable {
 	public static Font font_Bigger;
 	public static Font font_Big;
 	public static Font font_End;
+	public static Font font_Start;
 
 	public VillainCanvas(int width, int height) {
 		WIDTH = width;
@@ -63,6 +64,7 @@ public class VillainCanvas extends Canvas implements Runnable {
 			font_Big = font.deriveFont(Font.BOLD, 18);
 			font_Bigger = font.deriveFont(Font.BOLD, 16);
 			font_End = font.deriveFont(Font.BOLD, 200);
+			font_Start = font.deriveFont(Font.BOLD, 150);
 		} catch (FontFormatException e) {
 			System.err.println("Cannot Load Font! Using default one");
 		} catch (IOException e) {
@@ -73,6 +75,7 @@ public class VillainCanvas extends Canvas implements Runnable {
 				font_Big = font.deriveFont(Font.BOLD, 18);
 				font_Bigger = font.deriveFont(Font.BOLD, 16);
 				font_End = font.deriveFont(Font.BOLD, 96);
+				font_Start = font.deriveFont(Font.BOLD, 150);
 			}
 		}
 	}
