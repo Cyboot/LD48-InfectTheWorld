@@ -139,6 +139,8 @@ public class BodyLevel extends Level {
 		updateEnities(virus, delta);
 		updateEnities(spawner, delta);
 
+		
+		Player.addMoneyDelta(delta);
 	}
 
 	private void updateEnities(List<? extends Entity> list, int delta) {

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+import de.timweb.ld48.villain.game.Player;
 import de.timweb.ld48.villain.game.VillainCanvas;
 
 public class Gui {
@@ -35,8 +36,11 @@ public class Gui {
 			texts = null;
 			curserPositions = null;
 		}
+		
+		Button.spawnrate.update(delta);
+		Button.speed.update(delta);
+		Button.strenght.update(delta);
 
-		// TODO: 05. Mutation, Buttons
 		// TODO: 99. (special attacks)
 	}
 
@@ -80,8 +84,27 @@ public class Gui {
 	}
 
 	public void render(Graphics g) {
+		if (g instanceof Graphics2D) {
+			Graphics2D g2d = (Graphics2D) g;
+			try {
+				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+						RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			} catch (Exception e) {
+				System.err.println("Antialias failed for displaying the Font");
+			}
+		}
+		
 		g.drawImage(ImageLoader.scoreboard, VillainCanvas.WIDTH - 150, 0, null);
 
+		g.setColor(Color.white);
+		g.setFont(VillainCanvas.font_Big);
+		g.drawString("$ "+Player.getMoney(), VillainCanvas.WIDTH - 130, 30);
+		
+		Button.strenght.render(g);
+		Button.speed.render(g);
+		Button.spawnrate.render(g);
+		
+		
 		if (!isWriting && !showText)
 			return;
 
@@ -94,15 +117,6 @@ public class Gui {
 		g.drawImage(ImageLoader.villain, 0, 0, null);
 		g.drawImage(ImageLoader.speech, 0, 0, null);
 
-		if (g instanceof Graphics2D) {
-			Graphics2D g2d = (Graphics2D) g;
-			try {
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-						RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			} catch (Exception e) {
-				System.err.println("Antialias failed for displaying the Font");
-			}
-		}
 
 		g.setColor(Color.white);
 		g.setFont(VillainCanvas.font);

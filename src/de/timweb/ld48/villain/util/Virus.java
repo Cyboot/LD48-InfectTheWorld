@@ -11,12 +11,13 @@ import de.timweb.ld48.villain.game.Level;
 import de.timweb.ld48.villain.game.VillainCanvas;
 
 public class Virus extends Entity {
-	public static final int LEVELUP = 1;
+	public static final int LEVELUP = 3;
 	private static final double DEFAULT_SPEED = 0.02;
 	private static final double MIN_DISTANCE = 5;
 
 	private static int strength = 0;
 	private static int level = 0;
+	private static double maxSpeed = 2;
 
 	private BufferedImage img;
 	private Vector2d direction;
@@ -98,7 +99,7 @@ public class Virus extends Entity {
 	public void setTarget(Vector2d target) {
 		this.target = target;
 
-		speed = 10 * DEFAULT_SPEED;
+		speed = maxSpeed * DEFAULT_SPEED;
 	}
 
 	@Override
@@ -168,5 +169,9 @@ public class Virus extends Entity {
 
 	public int getColor() {
 		return color;
+	}
+
+	public static void increaseSpeed() {
+		maxSpeed += 0.2;
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import de.timweb.ld48.villain.game.BodyLevel;
 import de.timweb.ld48.villain.game.Game;
+import de.timweb.ld48.villain.game.Player;
 import de.timweb.ld48.villain.game.Spawner;
 import de.timweb.ld48.villain.game.VillainCanvas;
 import de.timweb.ld48.villain.util.ImageLoader;
@@ -163,6 +164,11 @@ public class WhiteCell extends Entity {
 		target = nearest;
 	}
 
+	@Override
+	protected void onKilled() {
+		Player.addMoney(50);
+	}
+	
 	@Override
 	public void render(Graphics g) {
 		

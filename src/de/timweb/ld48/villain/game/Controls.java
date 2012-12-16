@@ -14,14 +14,18 @@ public class Controls implements MouseListener, KeyListener,
 		MouseMotionListener {
 	public final static Controls c = new Controls();
 
+	private Point currentMousePos;
 	private boolean ok_pressed;
 	private boolean space_pressed;
 	private Point mousePos_right;
 	private Point mousePos_left;
 
-	private boolean leftMouse_clicked;
+	private boolean leftMouse_down;
+	private boolean leftMouse_up;
 
 	private boolean l_pressed;
+
+	private boolean leftMouseButton;
 
 	public boolean wasKeyPressed(int code) {
 		boolean result = false;
@@ -79,10 +83,11 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mouseClicked(MouseEvent me) {
+		System.out.println("clicked "+me.getButton());
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
+			leftMouse_up = true;
 			break;
-
 		default:
 			break;
 		}
@@ -100,11 +105,13 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mousePressed(MouseEvent me) {
+		System.out.println("mouse pressed");
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			SelectRect.s.setPoint1(me.getPoint());
 			mousePos_left = me.getPoint();
-			leftMouse_clicked = true;
+			leftMouse_down = true;
+			leftMouseButton = true;
 			break;
 
 		default:
@@ -115,10 +122,12 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mouseReleased(MouseEvent me) {
+		System.out.println("released: "+me.getButton());
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			SelectRect.s.released();
 			mousePos_right = null;
+			leftMouseButton = false;
 			break;
 		case MouseEvent.BUTTON3:
 			mousePos_right = me.getPoint();
@@ -139,7 +148,7 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mouseMoved(MouseEvent me) {
-
+		currentMousePos = me.getPoint();
 	}
 
 	public boolean isRightMouseDown() {
@@ -149,6 +158,12 @@ public class Controls implements MouseListener, KeyListener,
 	public boolean isLeftMouseDown() {
 		return mousePos_left != null;
 	}
+	
+	public boolean isLeftMouseDownButton() {
+		return leftMouseButton;
+	}
+	
+	
 
 	public Point getMousePosRight() {
 		return mousePos_right;
@@ -159,9 +174,19 @@ public class Controls implements MouseListener, KeyListener,
 	}
 
 	public boolean wasLeftMouseClicked() {
-		boolean result = leftMouse_clicked;
-		leftMouse_clicked = false;
+		boolean result = leftMouse_down;
+		leftMouse_down = false;
 		return result;
+	}
+	
+	public boolean wasLeftMouseUp() {
+		boolean result = leftMouse_up;
+		leftMouse_up = false;
+		return result;
+	}
+
+	public Point getCurrentMousePos() {
+		return currentMousePos;
 	}
 
 }

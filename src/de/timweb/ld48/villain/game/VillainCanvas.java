@@ -25,6 +25,8 @@ public class VillainCanvas extends Canvas implements Runnable {
 	public static long TARGET_DELTA = 1000 / TARGET_FPS;
 	public static float fps = 0;
 	public static Font font;
+	public static Font font_Bigger;
+	public static Font font_Big;
 
 	public VillainCanvas(int width, int height) {
 		WIDTH = width;
@@ -45,8 +47,8 @@ public class VillainCanvas extends Canvas implements Runnable {
 		initFont();
 		ImageLoader.init();
 		SoundEffect.init();
-		
-		SoundEffect.MUSIC.loop();
+
+		// SoundEffect.MUSIC.loop();
 		t.start();
 	}
 
@@ -57,14 +59,17 @@ public class VillainCanvas extends Canvas implements Runnable {
 							.getResourceAsStream("/cinnamon_cake.ttf"));
 			// GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
 			font = font.deriveFont(Font.PLAIN, 14);
-
+			font_Big = font.deriveFont(Font.BOLD, 18);
+			font_Bigger = font.deriveFont(Font.BOLD, 16);
 		} catch (FontFormatException e) {
 			System.err.println("Cannot Load Font! Using default one");
 		} catch (IOException e) {
 			System.err.println("Cannot find Font! Using default one");
 		} finally {
-			if (font == null)
+			if (font == null) {
 				font = getFont();
+				font_Big = font.deriveFont(Font.BOLD, 18);
+			}
 		}
 	}
 
@@ -75,8 +80,7 @@ public class VillainCanvas extends Canvas implements Runnable {
 		while (true) {
 			long start = System.currentTimeMillis();
 
-			
-			update((int)delta);
+			update((int) delta);
 
 			BufferStrategy bs = getBufferStrategy();
 			if (bs == null) {
@@ -106,19 +110,20 @@ public class VillainCanvas extends Canvas implements Runnable {
 	}
 
 	private void update(int delta) {
-		
-		//cover Lags (example debugging)
-		if(delta >= 800)
+
+		// cover Lags (example debugging)
+		if (delta >= 800)
 			return;
-		
+
 		Game.g.update(delta);
 
 		try {
-			Gui.g.update( delta);
+			Gui.g.update(delta);
 		} catch (Exception e) {
 			System.err
-					.println("Exception occured, this should NOT HAPPEN, continue anyways (to little time to test this): "+e);
-		}		
+					.println("Exception occured, this should NOT HAPPEN, continue anyways (to little time to test this): "
+							+ e);
+		}
 	}
 
 	private void render(Graphics g) {
@@ -126,11 +131,12 @@ public class VillainCanvas extends Canvas implements Runnable {
 
 		Game.g.render(g);
 
-		try{
+		try {
 			Gui.g.render(g);
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.err
-			.println("Exception occured, this should NOT HAPPEN, continue anyways (to little time to test this): "+e);
+					.println("Exception occured, this should NOT HAPPEN, continue anyways (to little time to test this): "
+							+ e);
 		}
 
 		if (g instanceof Graphics2D) {
@@ -145,7 +151,7 @@ public class VillainCanvas extends Canvas implements Runnable {
 
 		g.setColor(Color.white);
 		g.setFont(font);
-		g.drawString("FPS: " + fps, WIDTH - 100, 20);
+		g.drawString("FPS: " + (int)fps, 5, 13);
 
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();

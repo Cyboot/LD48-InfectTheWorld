@@ -20,6 +20,10 @@ public class ImageLoader {
 	public static BufferedImage villain;
 	public static BufferedImage speech;
 	public static BufferedImage selected_32;
+	public static BufferedImage button_grey;
+	public static BufferedImage button_hover;
+	public static BufferedImage button_normal;
+	public static BufferedImage button_pressed;
 
 	public static BufferedImage sprite_cell_anti_16;
 	// private static BufferedImage sprite_cell_anti_64;
@@ -45,6 +49,10 @@ public class ImageLoader {
 			villain = readImage("villain.png");
 			speech = readImage("speech.png");
 			selected_32 = readImage("selected_32.png");
+			button_grey = readImage("button_grey.png");
+			button_hover = readImage("button_hover.png");
+			button_normal = readImage("button_normal.png");
+			button_pressed = readImage("button_pressed.png");
 
 			sprite_cell_anti_16 = readImage("sprite_cell_anti_16.png");
 			// sprite_cell_anti_64 = readImage("sprite_cell_anti_64.png");
