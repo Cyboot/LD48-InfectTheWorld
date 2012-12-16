@@ -7,6 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import de.timweb.ld48.villain.util.Gui;
+import de.timweb.ld48.villain.util.Virus;
+
 public class Controls implements MouseListener, KeyListener,
 		MouseMotionListener {
 	public final static Controls c = new Controls();
@@ -17,22 +20,27 @@ public class Controls implements MouseListener, KeyListener,
 	private Point mousePos_left;
 
 	private boolean leftMouse_clicked;
-	
-	
+
+	private boolean l_pressed;
+
 	public boolean wasKeyPressed(int code) {
 		boolean result = false;
 		switch (code) {
-		
 		case KeyEvent.VK_ENTER:
 			result = ok_pressed;
 			ok_pressed = false;
 			return result;
-			
+
 		case KeyEvent.VK_SPACE:
 			result = space_pressed;
 			space_pressed = false;
 			return result;
-			
+
+		case KeyEvent.VK_L:
+			result = l_pressed;
+			l_pressed = false;
+			return result;
+
 		default:
 			return false;
 		}
@@ -52,6 +60,11 @@ public class Controls implements MouseListener, KeyListener,
 			break;
 		case KeyEvent.VK_SPACE:
 			space_pressed = true;
+			Gui.g.drawText("hey this is a test", "and here are 3 lines",
+					"to test if this works");
+			break;
+		case KeyEvent.VK_L:
+			l_pressed = true;
 			break;
 
 		default:
@@ -70,7 +83,6 @@ public class Controls implements MouseListener, KeyListener,
 		case MouseEvent.BUTTON1:
 			break;
 
-			
 		default:
 			break;
 		}
@@ -110,7 +122,7 @@ public class Controls implements MouseListener, KeyListener,
 			break;
 		case MouseEvent.BUTTON3:
 			mousePos_right = me.getPoint();
-//			System.out.println("right");
+			// System.out.println("right");
 			break;
 
 		default:
@@ -133,13 +145,16 @@ public class Controls implements MouseListener, KeyListener,
 	public boolean isRightMouseDown() {
 		return mousePos_right != null;
 	}
+
 	public boolean isLeftMouseDown() {
 		return mousePos_left != null;
 	}
-	public Point getMousePosRight(){
+
+	public Point getMousePosRight() {
 		return mousePos_right;
 	}
-	public Point getMousePosLeft(){
+
+	public Point getMousePosLeft() {
 		return mousePos_left;
 	}
 
@@ -148,5 +163,5 @@ public class Controls implements MouseListener, KeyListener,
 		leftMouse_clicked = false;
 		return result;
 	}
-	
+
 }

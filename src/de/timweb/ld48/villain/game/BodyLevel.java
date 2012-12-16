@@ -72,8 +72,8 @@ public class BodyLevel extends Level {
 		switch (levelNr) {
 		case 1:
 			spawner.add(new Spawner(new Vector2d(w * 0.3, h * 0.3), -1));
-			spawner.add(new Spawner(new Vector2d(w * 0.9, h * 0.2), -1));
-			spawner.add(new Spawner(new Vector2d(w * 0.7, h * 0.7), -1));
+			spawner.add(new Spawner(new Vector2d(w * 0.7, h * 0.2), -1));
+			spawner.add(new Spawner(new Vector2d(w * 0.9, h * 0.7), -1));
 
 			break;
 		case 2:
@@ -94,27 +94,28 @@ public class BodyLevel extends Level {
 
 			whiteCells.add(new WhiteCell(new Vector2d(x, y)));
 		}
-		if (true)
-			return;
-		for (int i = 0; i < count; i++) {
-			double x = Math.random() * VillainCanvas.WIDTH;
-			double y = Math.random() * VillainCanvas.HEIGHT;
-
-			antibody.add(new Antibody(new Vector2d(x, y)));
-		}
-		for (int i = 0; i < count; i++) {
-			double x = Math.random() * VillainCanvas.WIDTH;
-			double y = Math.random() * VillainCanvas.HEIGHT;
-
-			redCells.add(new RedCell(new Vector2d(x, y)));
-		}
+//		for (int i = 0; i < count; i++) {
+//			double x = Math.random() * VillainCanvas.WIDTH;
+//			double y = Math.random() * VillainCanvas.HEIGHT;
+//
+//			antibody.add(new Antibody(new Vector2d(x, y),(int) (Math.random()*6)));
+//		}
+//		for (int i = 0; i < count; i++) {
+//			double x = Math.random() * VillainCanvas.WIDTH;
+//			double y = Math.random() * VillainCanvas.HEIGHT;
+//
+//			redCells.add(new RedCell(new Vector2d(x, y)));
+//		}
 	}
 
 	@Override
 	public void update(int delta) {
 		if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER)) {
 			finish();
-
+		}
+		//DEBUG
+		if(Controls.c.wasKeyPressed(KeyEvent.VK_L)){
+			Virus.setLevel(Virus.getLevel()+1);
 		}
 
 		if (Controls.c.wasLeftMouseClicked()) {

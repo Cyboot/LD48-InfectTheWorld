@@ -1,5 +1,7 @@
 package de.timweb.ld48.villain.util;
 
+import java.text.DecimalFormat;
+
 
 public class Vector2d {
 	public double x,y;
@@ -73,5 +75,13 @@ public class Vector2d {
 		double y = Math.random()*2 -1;
 		
 		return new Vector2d(x, y).normalize();
+	}
+	
+	
+	@Override
+	public String toString() {
+		DecimalFormat df = new DecimalFormat("#0.00");
+		
+		return df.format(x)+ " : " + df.format(y);
 	}
 }

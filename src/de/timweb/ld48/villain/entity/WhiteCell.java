@@ -1,6 +1,5 @@
 package de.timweb.ld48.villain.entity;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -15,6 +14,7 @@ import de.timweb.ld48.villain.util.Virus;
 
 public class WhiteCell extends Entity {
 	private static final int ALARM_RADIUS = 100;
+	private static final int MAX_NOENEMEY_TIMELEFT = 3000;
 	private static final double MIN_DISTANCE = 5;
 	private static final double DEFAULT_SPEED = 0.05;
 	
@@ -24,10 +24,12 @@ public class WhiteCell extends Entity {
 	private double speed = DEFAULT_SPEED;
 
 	private Entity target;
+	private boolean isDefender;
 
 	public WhiteCell(Vector2d pos) {
 		super(pos);
 
+		isDefender = Math.random() > 0.3;
 		direction = Vector2d.randomNormalized();
 	}
 
@@ -64,9 +66,10 @@ public class WhiteCell extends Entity {
 
 		direction = targetPos.copy().add(-pos.x, -pos.y).normalize();
 		
-		if(targetPos.distance(targetPos) < MIN_DISTANCE){
-			target = null;
+		if(targetPos.distance(pos) < MIN_DISTANCE){
 			speed = DEFAULT_SPEED;
+//			direction = Vector2d.randomNormalized();
+			target = null;
 		}
 		
 		double dx = direction.x * delta * speed;
@@ -117,12 +120,46 @@ public class WhiteCell extends Entity {
 			}
 		}
 		
+		Spawner ownspawner = null;
+		//if have no target for a time --> defend own spawner
+		if(nearest == null && isDefender && target == null){
+			minDist = Double.MAX_VALUE;
+			for (Spawner e : spawner) {
+				double dist = e.getPos().distance(pos);
+				if (e.isWhite() && dist < minDist) {
+					minDist = dist;
+					ownspawner = e;
+				}
+				if(dist < MIN_DISTANCE){
+					ownspawner = null;
+					direction = Vector2d.randomNormalized();
+					speed = DEFAULT_SPEED;
+				}
+			}
+			
+			//only goto spawner if it is far away enough
+			if(ownspawner == null || ownspawner.getPos().distance(pos) < ALARM_RADIUS*2){
+				ownspawner = null;
+			}else{
+				speed = 2* DEFAULT_SPEED;
+				nearest = ownspawner;
+			}
+		}
 		
 		
 		//Virus got away, random Direction again
 		if(nearest == null && target != null){
 			direction = Vector2d.randomNormalized();
 		}
+		
+		//check if is defending a spawner: 
+		//if yes --> don't delete the target
+		if(nearest == null && target instanceof Spawner){
+			if(((Spawner)target).isWhite())
+				return;
+		}
+		
+		
 		target = nearest;
 	}
 

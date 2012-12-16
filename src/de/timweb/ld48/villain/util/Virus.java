@@ -1,15 +1,22 @@
 package de.timweb.ld48.villain.util;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import de.timweb.ld48.villain.entity.Entity;
+import de.timweb.ld48.villain.game.BodyLevel;
+import de.timweb.ld48.villain.game.Game;
+import de.timweb.ld48.villain.game.Level;
 import de.timweb.ld48.villain.game.VillainCanvas;
 
 public class Virus extends Entity {
+	public static final int LEVELUP = 1;
 	private static final double DEFAULT_SPEED = 0.02;
 	private static final double MIN_DISTANCE = 5;
+
+	private static int strength = 0;
+	private static int level = 0;
 
 	private BufferedImage img;
 	private Vector2d direction;
@@ -17,47 +24,29 @@ public class Virus extends Entity {
 	private double speed = DEFAULT_SPEED;
 	private boolean isSelected;
 	private Vector2d target;
-	private Color color;
+	private int color;
 	private int health = 1000;
+	private boolean isFreezed;
 
-	public Virus(Vector2d pos, int color, int level, int size) {
+	public Virus(Vector2d pos, int color) {
 		super(pos);
 
-		this.size = size / 2;
-		img = ImageLoader.getVirusImage(color, level, size);
+		this.color = color;
 		direction = Vector2d.randomNormalized();
 
-		switch (color) {
-		case 0:
-			this.color = Color.red;
-			break;
-		case 1:
-			this.color = Color.yellow;
-			break;
-		case 2:
-			this.color = Color.green;
-			break;
-		case 3:
-			this.color = Color.cyan;
-			break;
-		case 4:
-			this.color = Color.blue;
-			break;
-		case 5:
-			this.color = Color.pink;
-			break;
-		}
-		this.color = Color.yellow;
-		this.color = new Color(this.color.getRed(), this.color.getGreen(),
-				this.color.getBlue(), 150);
+		setImage();
 	}
 
 	public Virus(Vector2d pos) {
-		this(pos, (int) (Math.random() * 6), (int) (Math.random() * 6), 16);
+		this(pos, (int) (Math.random() * 6));
 	}
 
 	@Override
 	public void update(int delta) {
+		double act_speed = speed;
+		if (isFreezed)
+			act_speed /= 10;
+
 		if (target != null) {
 			direction = target.copy().add(-pos.x, -pos.y).normalize();
 			if (target.distance(pos) < MIN_DISTANCE) {
@@ -74,8 +63,8 @@ public class Virus extends Entity {
 
 		}
 
-		double dx = direction.x * delta * speed;
-		double dy = direction.y * delta * speed;
+		double dx = direction.x * delta * act_speed;
+		double dy = direction.y * delta * act_speed;
 
 		pos.add(dx, dy);
 
@@ -95,8 +84,8 @@ public class Virus extends Entity {
 	@Override
 	public void render(Graphics g) {
 		if (isSelected) {
-			g.setColor(color);
-			g.fillOval(pos.x() - size, pos.y() - size, size * 2, size * 2);
+			g.drawImage(ImageLoader.selected_32, pos.x() - 16, pos.y() - 16,
+					null);
 		}
 
 		g.drawImage(img, pos.x() - size, pos.y() - size, null);
@@ -117,12 +106,67 @@ public class Virus extends Entity {
 		// TODO: 91.a Sound + Effekt
 		System.out.println("Virus killed");
 	}
-	
+
 	public void hurt(int delta) {
-		health  -= delta;
-		if(health <= 0){
+		health -= delta;
+		if (health <= 0) {
 			kill();
 		}
 	}
 
+	public static void setLevel(int level) {
+		Virus.level = level;
+
+		System.out.println("level: " + level);
+
+		// if level is too high --> don't set new images
+		if (level / LEVELUP >= 6 * 3) {
+			return;
+		}
+
+		// set new Images for this Level
+		Level gamelevel = Game.g.getCurrentLevel();
+		if (gamelevel instanceof BodyLevel) {
+			List<Virus> virus = ((BodyLevel) gamelevel).getVirus();
+
+			for (Virus v : virus) {
+				v.setImage();
+			}
+
+		}
+	}
+
+	public void setImage() {
+		img = ImageLoader.getVirusImage(color, level / LEVELUP);
+
+		size = 8;
+		int level = Virus.level / LEVELUP;
+		
+		if (level >= 6) {
+			size = 12;
+		}
+		if (level >= 12) {
+			size = 16;
+		}
+	}
+
+	public static void setStrength(int strength) {
+		Virus.strength = strength;
+	}
+
+	public static int getLevel() {
+		return level;
+	}
+
+	public static int getStrength() {
+		return strength;
+	}
+
+	public void freeze() {
+		isFreezed = true;
+	}
+
+	public int getColor() {
+		return color;
+	}
 }
