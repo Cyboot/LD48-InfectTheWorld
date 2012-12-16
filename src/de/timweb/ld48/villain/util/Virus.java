@@ -8,6 +8,7 @@ import de.timweb.ld48.villain.entity.Entity;
 import de.timweb.ld48.villain.game.BodyLevel;
 import de.timweb.ld48.villain.game.Game;
 import de.timweb.ld48.villain.game.Level;
+import de.timweb.ld48.villain.game.Spawner;
 import de.timweb.ld48.villain.game.VillainCanvas;
 
 public class Virus extends Entity {
@@ -15,7 +16,6 @@ public class Virus extends Entity {
 	private static final double DEFAULT_SPEED = 0.02;
 	private static final double MIN_DISTANCE = 5;
 
-	private static int strength = 0;
 	private static int level = 0;
 	private static double maxSpeed = 2;
 
@@ -47,6 +47,8 @@ public class Virus extends Entity {
 		double act_speed = speed;
 		if (isFreezed)
 			act_speed /= 10;
+
+		checkForAttack(delta);
 
 		if (target != null) {
 			direction = target.copy().add(-pos.x, -pos.y).normalize();
@@ -80,6 +82,19 @@ public class Virus extends Entity {
 			pos.add(0, dy);
 		}
 
+	}
+
+	private void checkForAttack(int delta) {
+		List<Spawner> spawner = ((BodyLevel) Game.g.getCurrentLevel())
+				.getSpawner();
+
+		for (Spawner e : spawner) {
+			double dist = e.getPos().distance(pos);
+			if (e.isWhite() && dist < MIN_DISTANCE * 3) {
+				e.attack(delta, (color + 1) % 6);
+				System.out.println("attack white spawner");
+			}
+		}
 	}
 
 	@Override
@@ -142,7 +157,7 @@ public class Virus extends Entity {
 
 		size = 8;
 		int level = Virus.level / LEVELUP;
-		
+
 		if (level >= 6) {
 			size = 12;
 		}
@@ -151,16 +166,8 @@ public class Virus extends Entity {
 		}
 	}
 
-	public static void setStrength(int strength) {
-		Virus.strength = strength;
-	}
-
 	public static int getLevel() {
 		return level;
-	}
-
-	public static int getStrength() {
-		return strength;
 	}
 
 	public void freeze() {
@@ -173,5 +180,9 @@ public class Virus extends Entity {
 
 	public static void increaseSpeed() {
 		maxSpeed += 0.2;
+	}
+
+	public boolean isFrozen() {
+		return isFreezed;
 	}
 }

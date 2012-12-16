@@ -18,11 +18,13 @@ public class WhiteCell extends Entity {
 	private static final int MAX_NOENEMEY_TIMELEFT = 3000;
 	private static final double MIN_DISTANCE = 5;
 	private static final double DEFAULT_SPEED = 0.05;
-	
+	private static final int START_HEALTH = 100 * 1000;
+
 	private BufferedImage img = ImageLoader.cell_white_24;
 	private Vector2d direction;
 	private int size = 12;
 	private double speed = DEFAULT_SPEED;
+	private int health = START_HEALTH;
 
 	private Entity target;
 	private boolean isDefender;
@@ -41,8 +43,6 @@ public class WhiteCell extends Entity {
 			moveToTarget(delta);
 			return;
 		}
-
-		// TODO: 08. werden schwächen wenn viren gefressen
 
 		double dx = direction.x * delta * speed;
 		double dy = direction.y * delta * speed;
@@ -66,13 +66,13 @@ public class WhiteCell extends Entity {
 		Vector2d targetPos = target.getPos();
 
 		direction = targetPos.copy().add(-pos.x, -pos.y).normalize();
-		
-		if(targetPos.distance(pos) < MIN_DISTANCE){
+
+		if (targetPos.distance(pos) < MIN_DISTANCE) {
 			speed = DEFAULT_SPEED;
-//			direction = Vector2d.randomNormalized();
+			// direction = Vector2d.randomNormalized();
 			target = null;
 		}
-		
+
 		double dx = direction.x * delta * speed;
 		double dy = direction.y * delta * speed;
 
@@ -88,42 +88,52 @@ public class WhiteCell extends Entity {
 
 	private void checkForEnemies(int delta) {
 		List<Virus> virus = ((BodyLevel) Game.g.getCurrentLevel()).getVirus();
-		List<Spawner> spawner = ((BodyLevel) Game.g.getCurrentLevel()).getSpawner();
+		List<Spawner> spawner = ((BodyLevel) Game.g.getCurrentLevel())
+				.getSpawner();
 
 		double minDist = Double.MAX_VALUE;
-		
+
 		Entity nearest = null;
 		for (Virus v : virus) {
 			double dist = v.getPos().distance(pos);
 			if (dist < ALARM_RADIUS && dist < minDist) {
 				minDist = dist;
 				nearest = v;
-				speed = 3* DEFAULT_SPEED;
+				speed = 3 * DEFAULT_SPEED;
 			}
-			if(dist < MIN_DISTANCE){
+			if (dist < MIN_DISTANCE) {
 				v.hurt(delta);
+
+				// if Virus is frozen don't hurt Whitecell
+				if (!v.isFrozen())
+					health -= Virus.getLevel() * delta;
+
+				if (health < 0)
+					kill();
+
+				System.out.println("health: " + health);
 			}
 		}
-		
-		//no Virus found --> check for enemy spawner
-		if(nearest == null){
+
+		// no Virus found --> check for enemy spawner
+		if (nearest == null) {
 			minDist = Double.MAX_VALUE;
 			for (Spawner e : spawner) {
 				double dist = e.getPos().distance(pos);
-				if (!e.isWhite() &&  dist < ALARM_RADIUS*1.5 && dist < minDist) {
+				if (!e.isWhite() && dist < ALARM_RADIUS * 1.5 && dist < minDist) {
 					minDist = dist;
 					nearest = e;
-					speed = 2* DEFAULT_SPEED;
+					speed = 2 * DEFAULT_SPEED;
 				}
-				if(dist < MIN_DISTANCE){
-					e.attack(delta,-1);
+				if (dist < MIN_DISTANCE) {
+					e.attack(delta, -1);
 				}
 			}
 		}
-		
+
 		Spawner ownspawner = null;
-		//if have no target for a time --> defend own spawner
-		if(nearest == null && isDefender && target == null){
+		// if have no target for a time --> defend own spawner
+		if (nearest == null && isDefender && target == null) {
 			minDist = Double.MAX_VALUE;
 			for (Spawner e : spawner) {
 				double dist = e.getPos().distance(pos);
@@ -131,36 +141,35 @@ public class WhiteCell extends Entity {
 					minDist = dist;
 					ownspawner = e;
 				}
-				if(dist < MIN_DISTANCE){
+				if (dist < MIN_DISTANCE) {
 					ownspawner = null;
 					direction = Vector2d.randomNormalized();
 					speed = DEFAULT_SPEED;
 				}
 			}
-			
-			//only goto spawner if it is far away enough
-			if(ownspawner == null || ownspawner.getPos().distance(pos) < ALARM_RADIUS*2){
+
+			// only goto spawner if it is far away enough
+			if (ownspawner == null
+					|| ownspawner.getPos().distance(pos) < ALARM_RADIUS * 2) {
 				ownspawner = null;
-			}else{
-				speed = 2* DEFAULT_SPEED;
+			} else {
+				speed = 2 * DEFAULT_SPEED;
 				nearest = ownspawner;
 			}
 		}
-		
-		
-		//Virus got away, random Direction again
-		if(nearest == null && target != null){
+
+		// Virus got away, random Direction again
+		if (nearest == null && target != null) {
 			direction = Vector2d.randomNormalized();
 		}
-		
-		//check if is defending a spawner: 
-		//if yes --> don't delete the target
-		if(nearest == null && target instanceof Spawner){
-			if(((Spawner)target).isWhite())
+
+		// check if is defending a spawner:
+		// if yes --> don't delete the target
+		if (nearest == null && target instanceof Spawner) {
+			if (((Spawner) target).isWhite())
 				return;
 		}
-		
-		
+
 		target = nearest;
 	}
 
@@ -168,14 +177,14 @@ public class WhiteCell extends Entity {
 	protected void onKilled() {
 		Player.addMoney(50);
 	}
-	
+
 	@Override
 	public void render(Graphics g) {
-		
-		//DEBUG: drawRadius
-//		g.setColor(Color.white);
-//		g.drawOval(pos.x() - ALARM_RADIUS, pos.y() - ALARM_RADIUS,
-//				ALARM_RADIUS * 2, ALARM_RADIUS * 2);
+
+		// DEBUG: drawRadius
+		// g.setColor(Color.white);
+		// g.drawOval(pos.x() - ALARM_RADIUS, pos.y() - ALARM_RADIUS,
+		// ALARM_RADIUS * 2, ALARM_RADIUS * 2);
 		g.drawImage(img, pos.x() - size, pos.y() - size, null);
 	}
 

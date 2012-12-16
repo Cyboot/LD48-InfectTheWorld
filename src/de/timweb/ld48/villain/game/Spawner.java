@@ -4,15 +4,16 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import de.timweb.ld48.villain.entity.Entity;
+import de.timweb.ld48.villain.entity.WhiteCell;
 import de.timweb.ld48.villain.util.ImageLoader;
 import de.timweb.ld48.villain.util.Vector2d;
 import de.timweb.ld48.villain.util.Virus;
 
 public class Spawner extends Entity {
-	public static final int MAX_SPAWN = 10 * 1000;
+	public static final int MAX_SPAWN = 20 * 1000;
 	public static final int HEALTH = 10 * 1000;
 
-	private static int maxVirusspawn = MAX_SPAWN;
+	private static int maxVirusspawn = MAX_SPAWN/2;
 
 	private int health = 10 * 1000;
 	private BufferedImage img;
@@ -35,7 +36,7 @@ public class Spawner extends Entity {
 		if (isWhite()) {
 			//use default time for White
 			if (lastSpawn > MAX_SPAWN) {
-				// level.addWhiteCell(new WhiteCell(getPos().copy()));
+				 level.addWhiteCell(new WhiteCell(getPos().copy()));
 				lastSpawn = 0;
 			}
 		} else {
