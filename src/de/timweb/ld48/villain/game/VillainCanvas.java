@@ -15,6 +15,7 @@ import java.io.IOException;
 import de.timweb.ld48.villain.VillainMain;
 import de.timweb.ld48.villain.util.Gui;
 import de.timweb.ld48.villain.util.ImageLoader;
+import de.timweb.ld48.villain.util.SoundEffect;
 
 @SuppressWarnings("serial")
 public class VillainCanvas extends Canvas implements Runnable {
@@ -41,6 +42,15 @@ public class VillainCanvas extends Canvas implements Runnable {
 
 	public void start() {
 		Thread t = new Thread(this);
+		initFont();
+		ImageLoader.init();
+		SoundEffect.init();
+		
+		SoundEffect.MUSIC.loop();
+		t.start();
+	}
+
+	private void initFont() {
 		try {
 			font = Font
 					.createFont(Font.TRUETYPE_FONT, VillainMain.class
@@ -56,10 +66,6 @@ public class VillainCanvas extends Canvas implements Runnable {
 			if (font == null)
 				font = getFont();
 		}
-
-		ImageLoader.init();
-
-		t.start();
 	}
 
 	@Override
