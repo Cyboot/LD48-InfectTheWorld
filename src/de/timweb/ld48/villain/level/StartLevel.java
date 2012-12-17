@@ -62,6 +62,7 @@ public class StartLevel extends BodyLevel {
 
 		switch (tutorial) {
 		case 0:
+			g.drawImage(ImageLoader.villain, 0, 0, null);
 			g.setFont(VillainCanvas.font_Start);
 			g.drawString("Infect the World", 80, VillainCanvas.HEIGHT / 2 + 50);
 			break;
