@@ -118,6 +118,7 @@ public class BodyLevel extends Level {
 			spawner.add(new Spawner(new Vector2d(w * 0.3, h * 0.3), -1));
 			spawner.add(new Spawner(new Vector2d(w * 0.7, h * 0.2), -1));
 			spawner.add(new Spawner(new Vector2d(w * 0.9, h * 0.7), -1));
+			spawner.add(new Spawner(new Vector2d(w * 0.5, h * 0.1), -1));
 
 			break;
 		case 0:
@@ -126,6 +127,7 @@ public class BodyLevel extends Level {
 			spawner.add(new Spawner(new Vector2d(w * 0.3, h * 0.5), -1));
 			spawner.add(new Spawner(new Vector2d(w * 0.5, h * 0.5), -1));
 			spawner.add(new Spawner(new Vector2d(w * 0.8, h * 0.8), -1));
+			spawner.add(new Spawner(new Vector2d(w * 0.7, h * 0.2), -1));
 			spawner.add(new Spawner(new Vector2d(w * 0.6, h * 0.6), -1));
 
 			break;
