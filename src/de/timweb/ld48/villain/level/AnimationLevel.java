@@ -12,7 +12,7 @@ import de.timweb.ld48.villain.util.Gui;
 import de.timweb.ld48.villain.util.ImageLoader;
 
 public class AnimationLevel extends Level {
-	private static final int TIME = 10 * 1000;
+	private static final int TIME = 7 * 1000;
 
 	private int timeleft = TIME;
 
@@ -26,15 +26,15 @@ public class AnimationLevel extends Level {
 			img2 = ImageLoader.human_level1_2;
 
 			Gui.g.drawText(timeleft, "First we have to infect the human",
-					"The viruses are in the Air", "",
+					"The viruses are in the air", "",
 					"Yeah, take a deep breath", "HARR HARR HARRR");
 			break;
 		case 2:
 			img1 = ImageLoader.human_level2_1;
 			img2 = ImageLoader.human_level2_2;
 			timeleft = 5 * 1000;
-			Gui.g.drawText(timeleft, "The liver is next", "                ",
-					"                    ");
+			Gui.g.drawText(timeleft, "The liver will be the next organ to be destroyed", "                ",
+					"HARR HARR HARRR");
 			break;
 		case 3:
 			img1 = ImageLoader.human_level3_1;
@@ -55,9 +55,9 @@ public class AnimationLevel extends Level {
 		if (timeleft < 0)
 			finish();
 
-		if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER)) {
-			finish();
-		}
+//		if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER)) {
+//			finish();
+//		}
 	}
 
 	@Override
@@ -69,8 +69,8 @@ public class AnimationLevel extends Level {
 
 		g.setColor(Color.orange);
 		g.setFont(VillainCanvas.font_Big);
-		g.drawString("Press <Enter> to continue", VillainCanvas.WIDTH / 2 - 80,
-				VillainCanvas.HEIGHT - 30);
+//		g.drawString("Press <Enter> to continue", VillainCanvas.WIDTH / 2 - 80,
+//				VillainCanvas.HEIGHT - 30);
 	}
 
 	@Override
