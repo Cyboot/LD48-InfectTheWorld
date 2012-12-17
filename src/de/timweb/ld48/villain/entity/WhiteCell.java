@@ -125,7 +125,7 @@ public class WhiteCell extends Entity {
 					nearest = e;
 					speed = 2 * DEFAULT_SPEED;
 				}
-				if (dist < MIN_DISTANCE) {
+				if (!e.isWhite() && dist < MIN_DISTANCE) {
 					e.attack(delta, -1);
 				}
 			}

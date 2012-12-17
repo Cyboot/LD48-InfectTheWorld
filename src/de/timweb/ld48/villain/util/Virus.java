@@ -91,7 +91,7 @@ public class Virus extends Entity {
 		for (Spawner e : spawner) {
 			double dist = e.getPos().distance(pos);
 			if (e.isWhite() && dist < MIN_DISTANCE * 3) {
-				e.attack(delta, (color + 1) % 6);
+				e.attack((delta+level)/2, (color + 1) % 6);
 				System.out.println("attack white spawner");
 			}
 		}
