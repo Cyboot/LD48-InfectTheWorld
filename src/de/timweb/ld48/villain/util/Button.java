@@ -113,7 +113,7 @@ public class Button {
 		cost += costDelta;
 	}
 
-	private void setCost(int cost) {
+	public void setCost(int cost) {
 		this.cost = cost;
 	}
 

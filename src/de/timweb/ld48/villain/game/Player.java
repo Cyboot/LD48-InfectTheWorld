@@ -1,7 +1,7 @@
 package de.timweb.ld48.villain.game;
 
 public class Player {
-	private static double money = 1000;
+	private static double money = 0;
 	
 	
 	
@@ -19,6 +19,10 @@ public class Player {
 	
 	public static int getMoney(){
 		return (int) money;
+	}
+
+	public static void setMoney(int i) {
+		money = i;
 	}
 	
 }

@@ -11,6 +11,7 @@ import de.timweb.ld48.villain.entity.Burn;
 import de.timweb.ld48.villain.entity.Freeze;
 import de.timweb.ld48.villain.level.BodyLevel;
 import de.timweb.ld48.villain.util.Gui;
+import de.timweb.ld48.villain.util.SoundEffect;
 import de.timweb.ld48.villain.util.Vector2d;
 
 public class Controls implements MouseListener, KeyListener,
@@ -20,6 +21,7 @@ public class Controls implements MouseListener, KeyListener,
 	private Point currentMousePos;
 	private boolean ok_pressed;
 	private boolean space_pressed;
+	private boolean f12_pressed;
 	private Point mousePos_right;
 	private Point mousePos_left;
 
@@ -46,6 +48,11 @@ public class Controls implements MouseListener, KeyListener,
 			result = space_pressed;
 			space_pressed = false;
 			return result;
+			
+		case KeyEvent.VK_F12:
+			result = f12_pressed;
+			f12_pressed = false;
+			return result;
 
 		case KeyEvent.VK_L:
 			result = l_pressed;
@@ -71,13 +78,19 @@ public class Controls implements MouseListener, KeyListener,
 			break;
 		case KeyEvent.VK_SPACE:
 			space_pressed = true;
-			Gui.g.drawText("hey this is a test", "and here are 3 lines",
-					"to test if this works");
 			break;
 		case KeyEvent.VK_L:
 			l_pressed = true;
 			break;
-
+		case KeyEvent.VK_F12:
+			f12_pressed = true;
+			break;
+		case KeyEvent.VK_M:
+			SoundEffect.muteMusic();
+			break;
+		case KeyEvent.VK_S:
+			SoundEffect.muteSound();
+			break;
 		default:
 			break;
 		}

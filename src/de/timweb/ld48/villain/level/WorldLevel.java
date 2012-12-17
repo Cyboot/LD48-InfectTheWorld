@@ -13,10 +13,10 @@ import de.timweb.ld48.villain.util.ImageLoader;
 
 public class WorldLevel extends Level {
 	private static final int HEIGHT = 80;
-	private static final int TIME = 8 * 5 * 1000;
+	private static final int TIME = 5 * 5 * 1000;
 
 	private int timePassed = 0;
-	private int finishedTimeleft = 7 * 1000;
+	private int finishedTimeleft = 5 * 1000;
 	private Image[] continents;
 	private boolean isFinished;
 	private boolean showEnd;

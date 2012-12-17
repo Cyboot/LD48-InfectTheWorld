@@ -16,7 +16,7 @@ public class Game {
 
 	public Game() {
 
-		// currentLevel = new WorldLevel();
+//		currentLevel = new BodyLevel(levelNr);
 		currentLevel = new StartLevel(tutorial++);
 	}
 

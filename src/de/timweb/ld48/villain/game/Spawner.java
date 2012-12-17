@@ -2,7 +2,9 @@ package de.timweb.ld48.villain.game;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
+import de.timweb.ld48.villain.entity.Antibody;
 import de.timweb.ld48.villain.entity.Entity;
 import de.timweb.ld48.villain.entity.WhiteCell;
 import de.timweb.ld48.villain.level.BodyLevel;
@@ -14,7 +16,7 @@ public class Spawner extends Entity {
 	public static final int MAX_SPAWN = 20 * 1000;
 	public static final int HEALTH = 10 * 1000;
 
-	private static int maxVirusspawn = MAX_SPAWN / 2;
+	private static int maxVirusspawn = MAX_SPAWN / 3;
 
 	private int health = 10 * 1000;
 	private BufferedImage img;
@@ -25,7 +27,11 @@ public class Spawner extends Entity {
 		super(pos);
 		setColor(color);
 
-		lastSpawn = (int) (Math.random() * MAX_SPAWN);
+		if (isWhite())
+			lastSpawn = 0;
+		else
+			lastSpawn = MAX_SPAWN;
+
 	}
 
 	@Override
@@ -38,6 +44,20 @@ public class Spawner extends Entity {
 			// use default time for White
 			if (lastSpawn > MAX_SPAWN) {
 				level.addWhiteCell(new WhiteCell(getPos().copy()));
+
+				if (Math.random() > 0.5) {
+					List<Spawner> spawner = level.getSpawner();
+
+					int colorAnti = 0;
+					for (Spawner s : spawner) {
+						if (!s.isWhite()) {
+							colorAnti = s.color;
+						}
+					}
+
+					level.addAntibody(new Antibody(getPos().copy(), colorAnti));
+				}
+
 				lastSpawn = 0;
 			}
 		} else {
@@ -95,6 +115,10 @@ public class Spawner extends Entity {
 			level.addWhiteCell(new WhiteCell(getPos().copy()));
 		else
 			level.addVirus(new Virus(getPos().copy(), color));
+	}
+
+	public static void reset() {
+		maxVirusspawn = MAX_SPAWN / 3;
 	}
 
 }

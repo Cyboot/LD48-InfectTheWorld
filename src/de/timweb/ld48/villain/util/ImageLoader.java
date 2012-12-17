@@ -57,6 +57,7 @@ public class ImageLoader {
 	private static BufferedImage sprite_virus_16;
 	private static BufferedImage sprite_virus_24;
 	private static BufferedImage sprite_virus_32;
+	public static BufferedImage sprite_white_24;
 	public static BufferedImage sprite_spawner;
 
 	private static HashMap<Integer, BufferedImage> virusMap = new HashMap<Integer, BufferedImage>();
@@ -112,6 +113,7 @@ public class ImageLoader {
 			sprite_virus_16 = readImage("sprite_virus_16.png");
 			sprite_virus_24 = readImage("sprite_virus_24.png");
 			sprite_virus_32 = readImage("sprite_virus_32.png");
+			sprite_white_24 = readImage("sprite_white_24.png");
 			sprite_spawner = readImage("sprite_spawner.png");
 
 			System.out.println("finished loading Images");

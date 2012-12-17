@@ -17,22 +17,24 @@ public class WhiteCell extends Entity {
 	private static final int ALARM_RADIUS = 100;
 	private static final double MIN_DISTANCE = 5;
 	private static final double DEFAULT_SPEED = 0.05;
-	private static final int START_HEALTH = 100 * 1000;
+	private static final int START_HEALTH = 30 * 1000;
 
 	private BufferedImage img = ImageLoader.cell_white_24;
 	private Vector2d direction;
 	private int size = 12;
 	private double speed = DEFAULT_SPEED;
 	private int health = START_HEALTH;
+	private int hurtlevel = 0;
 
 	private Entity target;
 	private boolean isDefender;
 	private boolean isFrozen;
+	private boolean isKilledByFire;
 
 	public WhiteCell(Vector2d pos) {
 		super(pos);
 
-		isDefender = Math.random() > 0.3;
+		isDefender = Math.random() > 0.2;
 		direction = Vector2d.randomNormalized();
 	}
 
@@ -109,11 +111,7 @@ public class WhiteCell extends Entity {
 
 				// if Virus is frozen don't hurt Whitecell
 				if (!v.isFrozen())
-					health -= Virus.getLevel() * delta;
-
-				if (health < 0)
-					kill();
-
+					hurt(Virus.getLevel() * delta);
 			}
 		}
 
@@ -175,9 +173,35 @@ public class WhiteCell extends Entity {
 		target = nearest;
 	}
 
+	private void hurt(int i) {
+		health -= i;
+
+		System.out.println(health);
+		
+		int hurtlevel = 6 - (int) (((float)health/START_HEALTH) *6);
+		
+		if(hurtlevel < 0)
+			hurtlevel = 0;
+		if(hurtlevel >= 6)
+			hurtlevel = 5;
+		
+		if(this.hurtlevel != hurtlevel){
+			int x = hurtlevel % 3;
+			int y = hurtlevel / 3;
+			img = ImageLoader.getSubImage(ImageLoader.sprite_white_24, x, y, 24);
+		}
+		
+		this.hurtlevel = hurtlevel;
+		
+		if (health < 0)
+			kill();
+
+	}
+
 	@Override
 	protected void onKilled() {
-		Player.addMoney(50);
+		if(!isKilledByFire)
+			Player.addMoney(10);
 	}
 
 	@Override
@@ -194,4 +218,9 @@ public class WhiteCell extends Entity {
 		this.isFrozen = isFrozen;
 	}
 
+	public void killByFire() {
+		super.kill();
+		isKilledByFire = true;
+	}
+	
 }

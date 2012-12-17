@@ -133,8 +133,6 @@ public class Virus extends Entity {
 	public static void setLevel(int level) {
 		Virus.level = level;
 
-		System.out.println("level: " + level);
-
 		// if level is too high --> don't set new images
 		if (level / LEVELUP >= 6 * 3) {
 			return;
@@ -182,6 +180,10 @@ public class Virus extends Entity {
 		maxSpeed += 0.2;
 	}
 
+	public static void resetSpeed(){
+		maxSpeed = 2;
+	}
+	
 	public boolean isFrozen() {
 		return isFreezed;
 	}

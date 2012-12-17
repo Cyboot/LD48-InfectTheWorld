@@ -50,7 +50,7 @@ public class VillainCanvas extends Canvas implements Runnable {
 		ImageLoader.init();
 		SoundEffect.init();
 
-		// SoundEffect.MUSIC.loop();
+		SoundEffect.MUSIC.loop();
 		t.start();
 	}
 
@@ -158,7 +158,10 @@ public class VillainCanvas extends Canvas implements Runnable {
 
 		g.setColor(Color.white);
 		g.setFont(font);
-		g.drawString("FPS: " + (int)fps, 5, 13);
+		g.drawString("FPS: " + (int) fps, 5, 13);
+
+		g.drawString("Press M to mute/unmute music", WIDTH - 190, HEIGHT - 30);
+		g.drawString("Press S to mute/unmute sound", WIDTH - 190, HEIGHT - 10);
 
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();

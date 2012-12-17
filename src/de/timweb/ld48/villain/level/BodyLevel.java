@@ -18,13 +18,14 @@ import de.timweb.ld48.villain.game.Player;
 import de.timweb.ld48.villain.game.SelectRect;
 import de.timweb.ld48.villain.game.Spawner;
 import de.timweb.ld48.villain.game.VillainCanvas;
+import de.timweb.ld48.villain.util.Button;
 import de.timweb.ld48.villain.util.Gui;
 import de.timweb.ld48.villain.util.ImageLoader;
 import de.timweb.ld48.villain.util.Vector2d;
 import de.timweb.ld48.villain.util.Virus;
 
 public class BodyLevel extends Level {
-	private static final int FINISH_TIMELEFT = 15 * 1000;
+	private static final int FINISH_TIMELEFT = 10 * 1000;
 
 	private int levelNr;
 	private BufferedImage bgImg;
@@ -40,6 +41,8 @@ public class BodyLevel extends Level {
 	private List<Entity> specials;
 
 	private List<Virus> selectedVirus = new ArrayList<Virus>();
+
+	private boolean isStarted;
 
 	public BodyLevel(int levelNr) {
 		this.levelNr = levelNr;
@@ -65,14 +68,31 @@ public class BodyLevel extends Level {
 			break;
 		}
 
-		addEnemys(1);
 		addSpawner();
 
 		if (levelNr == 0)
-			addVirus(100);
+			addVirus(20);
+		
+		
+		
 
 		SelectRect.s.setActive(true);
 		Gui.g.showScoreBoard();
+	}
+
+	private void reset() {
+		Virus.setLevel(Virus.getLevel()/3);
+		Player.setMoney(0);
+		
+		Spawner.reset();
+		
+		Button.spawnrate.setCost(1);
+		Button.speed.setCost(1);
+		Button.strenght.setCost(Virus.getLevel());
+		Button.special_burn.setCost(25);
+		Button.special_freeze.setCost(25);
+		Button.special_maxSpawn.setCost(25);
+		
 	}
 
 	private void addVirus(int count) {
@@ -137,7 +157,12 @@ public class BodyLevel extends Level {
 
 	@Override
 	public void update(int delta) {
-
+		if(!isStarted){
+			reset();
+			isStarted = true;
+		}
+		
+		
 		// check if there are white spawner in this level
 		boolean isWhiteSpawner = false;
 		for (Spawner s : spawner) {
@@ -146,8 +171,7 @@ public class BodyLevel extends Level {
 		}
 
 		// no more Whitespawner --> Player won
-		if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER)
-				|| (!isWhiteSpawner && !isFinished)) {
+		if ((!isWhiteSpawner && !isFinished) || Controls.c.wasKeyPressed(KeyEvent.VK_F12)) {
 			switch (levelNr) {
 			case 1:
 				Gui.g.drawText(FINISH_TIMELEFT,
@@ -326,5 +350,9 @@ public class BodyLevel extends Level {
 	}
 	public List<Antibody> getAntibody() {
 		return antibody;
+	}
+
+	public void addAntibody(Antibody antibody2) {
+		antibody.add(antibody2);
 	}
 }

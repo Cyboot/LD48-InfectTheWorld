@@ -31,7 +31,7 @@ public class Burn extends Entity {
 		for (WhiteCell w : whitecells) {
 			double dist = w.getPos().distance(pos);
 			if (dist < RADIUS) {
-				w.kill();
+				w.killByFire();
 			}
 		}
 		for (Antibody a : antibody) {
