@@ -42,6 +42,9 @@ public class Gui {
 		Button.spawnrate.update(delta);
 		Button.speed.update(delta);
 		Button.strenght.update(delta);
+		Button.special_burn.update(delta);
+		Button.special_freeze.update(delta);
+		Button.special_maxSpawn.update(delta);
 
 		// TODO: 99. (special attacks)
 	}
@@ -133,6 +136,9 @@ public class Gui {
 		Button.strenght.render(g);
 		Button.speed.render(g);
 		Button.spawnrate.render(g);
+		Button.special_burn.render(g);
+		Button.special_freeze.render(g);
+		Button.special_maxSpawn.render(g);
 	}
 
 	private void renderText(Graphics g) {

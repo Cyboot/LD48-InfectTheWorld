@@ -7,7 +7,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import de.timweb.ld48.villain.entity.Burn;
+import de.timweb.ld48.villain.entity.Freeze;
+import de.timweb.ld48.villain.level.BodyLevel;
 import de.timweb.ld48.villain.util.Gui;
+import de.timweb.ld48.villain.util.Vector2d;
 
 public class Controls implements MouseListener, KeyListener,
 		MouseMotionListener {
@@ -25,6 +29,10 @@ public class Controls implements MouseListener, KeyListener,
 	private boolean l_pressed;
 
 	private boolean leftMouseButton;
+
+	private boolean freeze;
+
+	private boolean burn;
 
 	public boolean wasKeyPressed(int code) {
 		boolean result = false;
@@ -104,9 +112,21 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mousePressed(MouseEvent me) {
-//		System.out.println("mouse pressed");
+		System.out.println("mouse pressed");
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
+			if(burn){
+				((BodyLevel)Game.g.getCurrentLevel()).addSpecial(new Burn(new Vector2d(me.getPoint().x, me.getPoint().y)));
+				burn = false;
+				return;
+			}
+			if(freeze){
+				((BodyLevel)Game.g.getCurrentLevel()).addSpecial(new Freeze(new Vector2d(me.getPoint().x, me.getPoint().y)));
+				freeze = false;
+				return;
+			}
+			
+			
 			SelectRect.s.setPoint1(me.getPoint());
 			mousePos_left = me.getPoint();
 			leftMouse_down = true;
@@ -188,4 +208,19 @@ public class Controls implements MouseListener, KeyListener,
 		return currentMousePos;
 	}
 
+	public void setFreeze() {
+		freeze = true;
+	}
+	
+	public boolean isFreeze() {
+		return freeze;
+	}
+
+	public void setBurn() {
+		burn = true;
+	}
+	
+	public boolean isBurn() {
+		return burn;
+	}
 }

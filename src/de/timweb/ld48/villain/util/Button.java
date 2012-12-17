@@ -5,16 +5,22 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.List;
 
 import de.timweb.ld48.villain.game.Controls;
+import de.timweb.ld48.villain.game.Game;
 import de.timweb.ld48.villain.game.Player;
 import de.timweb.ld48.villain.game.Spawner;
 import de.timweb.ld48.villain.game.VillainCanvas;
+import de.timweb.ld48.villain.level.BodyLevel;
 
 public class Button {
 	public static Button strenght = new Button("Strength", 50);
 	public static Button speed = new Button("Speed", 90);
 	public static Button spawnrate = new Button("Rate", 130);
+	public static Button special_freeze = new Button("FREEZE", 170, 25);
+	public static Button special_burn = new Button("BURN", 210, 25);
+	public static Button special_maxSpawn = new Button("SPAWN", 250, 25);
 
 	private String text;
 	private int height;
@@ -25,6 +31,14 @@ public class Button {
 
 	private Rectangle rect;
 	private int cost;
+	private int costDelta = 1;
+
+	public Button(String string, int height, int cost) {
+		this(string, height);
+
+		this.cost = cost;
+		costDelta = 5;
+	}
 
 	public Button(String string, int height) {
 		text = string;
@@ -35,10 +49,10 @@ public class Button {
 	}
 
 	public void update(int delta) {
-		//Button is now shown --> don't update
-		if(!Gui.g.isScoreboardShown())
+		// Button is now shown --> don't update
+		if (!Gui.g.isScoreboardShown())
 			return;
-		
+
 		Point pos = Controls.c.getCurrentMousePos();
 
 		if (cost > Player.getMoney()) {
@@ -78,10 +92,25 @@ public class Button {
 			Virus.increaseSpeed();
 		} else if (text.equals("Rate")) {
 			Spawner.increaseSpawnRate();
+		} else if (text.equals("FREEZE")) {
+			Controls.c.setFreeze();
+		} else if (text.equals("BURN")) {
+			Controls.c.setBurn();
+		} else if (text.equals("SPAWN")) {
+			List<Spawner> spawner = ((BodyLevel) Game.g.getCurrentLevel())
+					.getSpawner();
+			for(Spawner s : spawner){
+				if(s.isWhite())
+					continue;
+				
+				s.spawn();
+				s.spawn();
+				s.spawn();
+			}
 		}
 
 		Player.removeMoney(cost);
-		cost++;
+		cost += costDelta;
 	}
 
 	private void setCost(int cost) {
@@ -96,8 +125,12 @@ public class Button {
 			img = ImageLoader.button_pressed;
 		else if (isHover)
 			img = ImageLoader.button_hover;
-		else
-			img = ImageLoader.button_normal;
+		else {
+			if (costDelta > 1)
+				img = ImageLoader.button_special;
+			else
+				img = ImageLoader.button_normal;
+		}
 
 		g.drawImage(img, VillainCanvas.WIDTH - 150, height, null);
 

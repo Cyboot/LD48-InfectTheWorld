@@ -33,7 +33,8 @@ public class AnimationLevel extends Level {
 			img1 = ImageLoader.human_level2_1;
 			img2 = ImageLoader.human_level2_2;
 			timeleft = 5 * 1000;
-			Gui.g.drawText(timeleft, "The liver is next","                ","                    ");
+			Gui.g.drawText(timeleft, "The liver is next", "                ",
+					"                    ");
 			break;
 		case 3:
 			img1 = ImageLoader.human_level3_1;
@@ -75,7 +76,7 @@ public class AnimationLevel extends Level {
 	@Override
 	protected void finish() {
 		super.finish();
-		
+
 		Gui.g.deleteText();
 	}
 }

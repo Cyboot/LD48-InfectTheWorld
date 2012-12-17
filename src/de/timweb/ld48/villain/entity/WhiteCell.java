@@ -15,7 +15,6 @@ import de.timweb.ld48.villain.util.Virus;
 
 public class WhiteCell extends Entity {
 	private static final int ALARM_RADIUS = 100;
-	private static final int MAX_NOENEMEY_TIMELEFT = 3000;
 	private static final double MIN_DISTANCE = 5;
 	private static final double DEFAULT_SPEED = 0.05;
 	private static final int START_HEALTH = 100 * 1000;
@@ -28,6 +27,7 @@ public class WhiteCell extends Entity {
 
 	private Entity target;
 	private boolean isDefender;
+	private boolean isFrozen;
 
 	public WhiteCell(Vector2d pos) {
 		super(pos);
@@ -38,6 +38,9 @@ public class WhiteCell extends Entity {
 
 	@Override
 	public void update(int delta) {
+		if(isFrozen)
+			return;
+		
 		checkForEnemies(delta);
 		if (target != null) {
 			moveToTarget(delta);
@@ -185,6 +188,10 @@ public class WhiteCell extends Entity {
 		// g.drawOval(pos.x() - ALARM_RADIUS, pos.y() - ALARM_RADIUS,
 		// ALARM_RADIUS * 2, ALARM_RADIUS * 2);
 		g.drawImage(img, pos.x() - size, pos.y() - size, null);
+	}
+
+	public void setFrozen(boolean isFrozen) {
+		this.isFrozen = isFrozen;
 	}
 
 }

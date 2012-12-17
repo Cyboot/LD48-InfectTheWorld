@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.timweb.ld48.villain.entity.Antibody;
+import de.timweb.ld48.villain.entity.Burn;
 import de.timweb.ld48.villain.entity.Entity;
 import de.timweb.ld48.villain.entity.RedCell;
 import de.timweb.ld48.villain.entity.WhiteCell;
@@ -36,6 +37,7 @@ public class BodyLevel extends Level {
 	private List<RedCell> redCells;
 	private List<Virus> virus;
 	private List<Spawner> spawner;
+	private List<Entity> specials;
 
 	private List<Virus> selectedVirus = new ArrayList<Virus>();
 
@@ -46,6 +48,7 @@ public class BodyLevel extends Level {
 		redCells = new ArrayList<RedCell>(100);
 		virus = new ArrayList<Virus>(100);
 		spawner = new ArrayList<Spawner>(20);
+		specials = new ArrayList<Entity>(20);
 
 		switch (levelNr) {
 		case 0:
@@ -65,8 +68,8 @@ public class BodyLevel extends Level {
 		addEnemys(1);
 		addSpawner();
 
-		if(levelNr == 0)
-			addVirus(10);
+		if (levelNr == 0)
+			addVirus(100);
 
 		SelectRect.s.setActive(true);
 		Gui.g.showScoreBoard();
@@ -143,7 +146,8 @@ public class BodyLevel extends Level {
 		}
 
 		// no more Whitespawner --> Player won
-		if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER) || (!isWhiteSpawner && !isFinished)) {
+		if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER)
+				|| (!isWhiteSpawner && !isFinished)) {
 			switch (levelNr) {
 			case 1:
 				Gui.g.drawText(FINISH_TIMELEFT,
@@ -161,9 +165,8 @@ public class BodyLevel extends Level {
 			case 3:
 				Gui.g.drawText(FINISH_TIMELEFT,
 						"Congratulations! You won this Level",
-						"You killed the man, good job!","",
-						
-						
+						"You killed the man, good job!", "",
+
 						"Now...   Let's go bigger...    Much bigger...");
 				break;
 			}
@@ -204,6 +207,7 @@ public class BodyLevel extends Level {
 		updateEnities(antibody, delta);
 		updateEnities(virus, delta);
 		updateEnities(spawner, delta);
+		updateEnities(specials, delta);
 
 		Player.addMoneyDelta(delta);
 	}
@@ -276,7 +280,23 @@ public class BodyLevel extends Level {
 		renderEntities(whiteCells, g);
 		renderEntities(virus, g);
 
+		renderSpecials(g);
+
 		SelectRect.s.render(g);
+	}
+
+	private void renderSpecials(Graphics g) {
+		Point mousepos = Controls.c.getCurrentMousePos();
+
+		if (Controls.c.isBurn()) {
+			g.drawImage(ImageLoader.special_fire_trans, mousepos.x - 100, mousepos.y - 100, null);
+		}
+		if (Controls.c.isFreeze()) {
+			g.drawImage(ImageLoader.special_ice_trans, mousepos.x - 100, mousepos.y - 100, null);
+		}
+
+		renderEntities(specials, g);
+
 	}
 
 	public void renderEntities(List<? extends Entity> list, Graphics g) {
@@ -288,11 +308,23 @@ public class BodyLevel extends Level {
 	public List<Spawner> getSpawner() {
 		return spawner;
 	}
-	
+
 	@Override
 	protected void finish() {
 		super.finish();
-		
+
 		Gui.g.deleteText();
+	}
+
+	public void addSpecial(Entity special) {
+		specials.add(special);
+
+	}
+
+	public List<WhiteCell> getWhiteCells() {
+		return whiteCells;
+	}
+	public List<Antibody> getAntibody() {
+		return antibody;
 	}
 }

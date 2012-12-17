@@ -23,9 +23,14 @@ public class ImageLoader {
 	public static BufferedImage button_grey;
 	public static BufferedImage button_hover;
 	public static BufferedImage button_normal;
+	public static BufferedImage button_special;
 	public static BufferedImage button_pressed;
 	public static BufferedImage shade;
 	public static BufferedImage tutorial;
+	public static BufferedImage special_ice;
+	public static BufferedImage special_ice_trans;
+	public static BufferedImage special_fire;
+	public static BufferedImage special_fire_trans;
 
 	public static BufferedImage bg_world;
 	public static BufferedImage top_world;
@@ -73,9 +78,15 @@ public class ImageLoader {
 			button_grey = readImage("button_grey.png");
 			button_hover = readImage("button_hover.png");
 			button_normal = readImage("button_normal.png");
+			button_special = readImage("button_special.png");
 			button_pressed = readImage("button_pressed.png");
 			shade = readImage("shade.png");
 			tutorial = readImage("tutorial.png");
+			
+			special_ice = readImage("special_ice.png");
+			special_ice_trans = readImage("special_ice_trans.png");
+			special_fire = readImage("special_fire.png");
+			special_fire_trans = readImage("special_fire_trans.png");
 
 			// Worldlevel
 			bg_world = readImage("bg_world.png");

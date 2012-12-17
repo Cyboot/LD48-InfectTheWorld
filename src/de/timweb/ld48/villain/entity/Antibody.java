@@ -23,19 +23,16 @@ public class Antibody extends Entity {
 		super(pos);
 
 		this.color = color;
-		
+
 		flicker = (int) (Math.random() * 1000);
 
-		
 		int x = color % 3;
-		int y = color/3;
-		img = ImageLoader.getSubImage(ImageLoader.sprite_cell_anti_16, x, y, 16);
-		
-		
+		int y = color / 3;
+		img = ImageLoader
+				.getSubImage(ImageLoader.sprite_cell_anti_16, x, y, 16);
+
 		direction = Vector2d.randomNormalized();
 	}
-
-	
 
 	private static final int ALARM_RADIUS = 100;
 	private static final double MIN_DISTANCE = 5;
@@ -45,6 +42,7 @@ public class Antibody extends Entity {
 	private double speed = DEFAULT_SPEED;
 
 	private Entity target;
+	private boolean isFrozen = false;
 
 	@Override
 	public void update(int delta) {
@@ -52,7 +50,11 @@ public class Antibody extends Entity {
 		if (flicker > MAX_FLICKER) {
 			flicker = -MAX_FLICKER / 8;
 		}
-
+		
+		if(isFrozen)
+			return;
+		
+		
 		checkForEnemies(delta);
 		if (target != null) {
 			moveToTarget(delta);
@@ -102,17 +104,17 @@ public class Antibody extends Entity {
 
 	private void checkForEnemies(int delta) {
 		List<Virus> virus = ((BodyLevel) Game.g.getCurrentLevel()).getVirus();
-		
+
 		double minDist = Double.MAX_VALUE;
 
-		//TODO: 92. Antibody nur an Virus anhefen, nicht drauf stehen
-		
+		// TODO: 92. Antibody nur an Virus anhefen, nicht drauf stehen
+
 		Entity nearest = null;
 		for (Virus v : virus) {
-			//only search for right color
-			if(color != v.getColor())
+			// only search for right color
+			if (color != v.getColor())
 				continue;
-			
+
 			double dist = v.getPos().distance(pos);
 			if (dist < ALARM_RADIUS && dist < minDist) {
 				minDist = dist;
@@ -138,5 +140,9 @@ public class Antibody extends Entity {
 
 		g.drawImage(img, pos.x() - size, pos.y() - size, null);
 	}
-	
+
+	public void setFrozen(boolean b) {
+		isFrozen = b;
+	}
+
 }

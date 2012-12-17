@@ -14,7 +14,7 @@ public class Spawner extends Entity {
 	public static final int MAX_SPAWN = 20 * 1000;
 	public static final int HEALTH = 10 * 1000;
 
-	private static int maxVirusspawn = MAX_SPAWN/2;
+	private static int maxVirusspawn = MAX_SPAWN / 2;
 
 	private int health = 10 * 1000;
 	private BufferedImage img;
@@ -35,13 +35,13 @@ public class Spawner extends Entity {
 
 		BodyLevel level = (BodyLevel) Game.g.getCurrentLevel();
 		if (isWhite()) {
-			//use default time for White
+			// use default time for White
 			if (lastSpawn > MAX_SPAWN) {
-				 level.addWhiteCell(new WhiteCell(getPos().copy()));
+				level.addWhiteCell(new WhiteCell(getPos().copy()));
 				lastSpawn = 0;
 			}
 		} else {
-			//Use mutable maxVirusspawn for virus
+			// Use mutable maxVirusspawn for virus
 			if (lastSpawn > maxVirusspawn) {
 				level.addVirus(new Virus(getPos().copy(), color));
 				lastSpawn = 0;
@@ -83,9 +83,18 @@ public class Spawner extends Entity {
 
 	public static void increaseSpawnRate() {
 		maxVirusspawn -= 500;
-		if(maxVirusspawn < 1000){
+		if (maxVirusspawn < 1000) {
 			maxVirusspawn = 1000;
 		}
+	}
+
+	public void spawn() {
+		BodyLevel level = (BodyLevel) Game.g.getCurrentLevel();
+
+		if (isWhite())
+			level.addWhiteCell(new WhiteCell(getPos().copy()));
+		else
+			level.addVirus(new Virus(getPos().copy(), color));
 	}
 
 }
