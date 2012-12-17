@@ -45,6 +45,9 @@ public class StartLevel extends BodyLevel {
 		g.drawImage(ImageLoader.shade, 0, 0, null);
 		g.drawImage(ImageLoader.shade, 0, 0, null);
 
+		g.drawImage(ImageLoader.goat, 0,
+				VillainCanvas.HEIGHT - 81, null);
+
 		if (g instanceof Graphics2D) {
 			Graphics2D g2d = (Graphics2D) g;
 			try {

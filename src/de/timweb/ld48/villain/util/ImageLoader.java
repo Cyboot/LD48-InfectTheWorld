@@ -31,6 +31,7 @@ public class ImageLoader {
 	public static BufferedImage special_ice_trans;
 	public static BufferedImage special_fire;
 	public static BufferedImage special_fire_trans;
+	public static BufferedImage goat;
 
 	public static BufferedImage bg_world;
 	public static BufferedImage top_world;
@@ -88,6 +89,8 @@ public class ImageLoader {
 			special_ice_trans = readImage("special_ice_trans.png");
 			special_fire = readImage("special_fire.png");
 			special_fire_trans = readImage("special_fire_trans.png");
+			
+			goat = readImage("goat.png");
 
 			// Worldlevel
 			bg_world = readImage("bg_world.png");

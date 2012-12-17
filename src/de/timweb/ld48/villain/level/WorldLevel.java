@@ -96,6 +96,9 @@ public class WorldLevel extends Level {
 			
 			g.setFont(VillainCanvas.font_Big);
 			g.drawString("Thanks for Playing!", VillainCanvas.WIDTH/2-50, VillainCanvas.HEIGHT-50);
+			
+			g.drawImage(ImageLoader.goat, 0,
+					VillainCanvas.HEIGHT - 81, null);
 		}
 	}
 
