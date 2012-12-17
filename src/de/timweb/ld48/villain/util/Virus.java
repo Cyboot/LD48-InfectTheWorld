@@ -14,7 +14,7 @@ import de.timweb.ld48.villain.level.BodyLevel;
 public class Virus extends Entity {
 	public static final int LEVELUP = 3;
 	private static final double DEFAULT_SPEED = 0.02;
-	private static final double MIN_DISTANCE = 5;
+	private static final double MIN_DISTANCE = 10;
 
 	private static int level = 0;
 	private static double maxSpeed = 2;
