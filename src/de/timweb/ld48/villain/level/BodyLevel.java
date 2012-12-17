@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.timweb.ld48.villain.entity.Antibody;
-import de.timweb.ld48.villain.entity.Burn;
 import de.timweb.ld48.villain.entity.Entity;
 import de.timweb.ld48.villain.entity.RedCell;
 import de.timweb.ld48.villain.entity.WhiteCell;
@@ -72,27 +71,24 @@ public class BodyLevel extends Level {
 
 		if (levelNr == 0)
 			addVirus(20);
-		
-		
-		
 
 		SelectRect.s.setActive(true);
 		Gui.g.showScoreBoard();
 	}
 
 	private void reset() {
-		Virus.setLevel(Virus.getLevel()/3);
+		Virus.setLevel(Virus.getLevel() / 3);
 		Player.setMoney(0);
-		
+
 		Spawner.reset();
-		
+
 		Button.spawnrate.setCost(1);
 		Button.speed.setCost(1);
 		Button.strenght.setCost(Virus.getLevel());
 		Button.special_burn.setCost(25);
 		Button.special_freeze.setCost(25);
 		Button.special_maxSpawn.setCost(25);
-		
+
 	}
 
 	private void addVirus(int count) {
@@ -136,6 +132,7 @@ public class BodyLevel extends Level {
 
 	}
 
+	@SuppressWarnings("unused")
 	private void addEnemys(int count) {
 		for (int i = 0; i < count; i++) {
 			double x = Math.random() * VillainCanvas.WIDTH;
@@ -160,12 +157,11 @@ public class BodyLevel extends Level {
 
 	@Override
 	public void update(int delta) {
-		if(!isStarted){
+		if (!isStarted) {
 			reset();
 			isStarted = true;
 		}
-		
-		
+
 		// check if there are white spawner in this level
 		boolean isWhiteSpawner = false;
 		for (Spawner s : spawner) {
@@ -174,7 +170,8 @@ public class BodyLevel extends Level {
 		}
 
 		// no more Whitespawner --> Player won
-		if ((!isWhiteSpawner && !isFinished) || Controls.c.wasKeyPressed(KeyEvent.VK_F12)) {
+		if ((!isWhiteSpawner && !isFinished)
+				|| Controls.c.wasKeyPressed(KeyEvent.VK_F12)) {
 			switch (levelNr) {
 			case 1:
 				Gui.g.drawText(FINISH_TIMELEFT,
@@ -316,10 +313,12 @@ public class BodyLevel extends Level {
 		Point mousepos = Controls.c.getCurrentMousePos();
 
 		if (Controls.c.isBurn()) {
-			g.drawImage(ImageLoader.special_fire_trans, mousepos.x - 100, mousepos.y - 100, null);
+			g.drawImage(ImageLoader.special_fire_trans, mousepos.x - 100,
+					mousepos.y - 100, null);
 		}
 		if (Controls.c.isFreeze()) {
-			g.drawImage(ImageLoader.special_ice_trans, mousepos.x - 100, mousepos.y - 100, null);
+			g.drawImage(ImageLoader.special_ice_trans, mousepos.x - 100,
+					mousepos.y - 100, null);
 		}
 
 		renderEntities(specials, g);
@@ -351,6 +350,7 @@ public class BodyLevel extends Level {
 	public List<WhiteCell> getWhiteCells() {
 		return whiteCells;
 	}
+
 	public List<Antibody> getAntibody() {
 		return antibody;
 	}

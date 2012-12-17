@@ -115,8 +115,9 @@ public enum SoundEffect {
 	public static boolean isMusicMuted() {
 		return isMusicMuted;
 	}
+
 	public static boolean isSoundMuted() {
 		return isMuted;
 	}
-	
+
 }

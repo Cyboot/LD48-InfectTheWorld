@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import de.timweb.ld48.villain.game.Game;
-import de.timweb.ld48.villain.game.Spawner;
 import de.timweb.ld48.villain.game.VillainCanvas;
 import de.timweb.ld48.villain.level.BodyLevel;
 import de.timweb.ld48.villain.util.ImageLoader;
@@ -50,11 +49,10 @@ public class Antibody extends Entity {
 		if (flicker > MAX_FLICKER) {
 			flicker = -MAX_FLICKER / 8;
 		}
-		
-		if(isFrozen)
+
+		if (isFrozen)
 			return;
-		
-		
+
 		checkForEnemies(delta);
 		if (target != null) {
 			moveToTarget(delta);

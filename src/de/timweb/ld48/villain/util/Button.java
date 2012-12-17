@@ -85,9 +85,9 @@ public class Button {
 	}
 
 	private void waspressed() {
-		
+
 		SoundEffect.LEVELUP.play();
-		
+
 		// Dirty dirty (no time)
 		if (text.equals("Strength")) {
 			Virus.setLevel(Virus.getLevel() + 1);
@@ -102,10 +102,10 @@ public class Button {
 		} else if (text.equals("SPAWN")) {
 			List<Spawner> spawner = ((BodyLevel) Game.g.getCurrentLevel())
 					.getSpawner();
-			for(Spawner s : spawner){
-				if(s.isWhite())
+			for (Spawner s : spawner) {
+				if (s.isWhite())
 					continue;
-				
+
 				s.spawn();
 				s.spawn();
 				s.spawn();

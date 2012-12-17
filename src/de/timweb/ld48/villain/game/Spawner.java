@@ -95,8 +95,8 @@ public class Spawner extends Entity {
 	public void attack(int delta, int color) {
 		health -= delta;
 
-		System.out.println("spawner-health: " +health);
-		
+//		System.out.println("spawner-health: " + health);
+
 		if (health <= 0) {
 			health = HEALTH;
 			setColor(color);

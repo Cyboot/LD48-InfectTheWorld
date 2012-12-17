@@ -10,7 +10,6 @@ import java.awt.event.MouseMotionListener;
 import de.timweb.ld48.villain.entity.Burn;
 import de.timweb.ld48.villain.entity.Freeze;
 import de.timweb.ld48.villain.level.BodyLevel;
-import de.timweb.ld48.villain.util.Gui;
 import de.timweb.ld48.villain.util.SoundEffect;
 import de.timweb.ld48.villain.util.Vector2d;
 
@@ -48,7 +47,7 @@ public class Controls implements MouseListener, KeyListener,
 			result = space_pressed;
 			space_pressed = false;
 			return result;
-			
+
 		case KeyEvent.VK_F12:
 			result = f12_pressed;
 			f12_pressed = false;
@@ -103,7 +102,7 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mouseClicked(MouseEvent me) {
-//		System.out.println("clicked "+me.getButton());
+		// System.out.println("clicked "+me.getButton());
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			leftMouse_up = true;
@@ -125,21 +124,22 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mousePressed(MouseEvent me) {
-		System.out.println("mouse pressed");
+//		System.out.println("mouse pressed");
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
-			if(burn){
-				((BodyLevel)Game.g.getCurrentLevel()).addSpecial(new Burn(new Vector2d(me.getPoint().x, me.getPoint().y)));
+			if (burn) {
+				((BodyLevel) Game.g.getCurrentLevel()).addSpecial(new Burn(
+						new Vector2d(me.getPoint().x, me.getPoint().y)));
 				burn = false;
 				return;
 			}
-			if(freeze){
-				((BodyLevel)Game.g.getCurrentLevel()).addSpecial(new Freeze(new Vector2d(me.getPoint().x, me.getPoint().y)));
+			if (freeze) {
+				((BodyLevel) Game.g.getCurrentLevel()).addSpecial(new Freeze(
+						new Vector2d(me.getPoint().x, me.getPoint().y)));
 				freeze = false;
 				return;
 			}
-			
-			
+
 			SelectRect.s.setPoint1(me.getPoint());
 			mousePos_left = me.getPoint();
 			leftMouse_down = true;
@@ -154,7 +154,7 @@ public class Controls implements MouseListener, KeyListener,
 
 	@Override
 	public void mouseReleased(MouseEvent me) {
-//		System.out.println("released: "+me.getButton());
+		// System.out.println("released: "+me.getButton());
 		switch (me.getButton()) {
 		case MouseEvent.BUTTON1:
 			SelectRect.s.released();
@@ -190,12 +190,10 @@ public class Controls implements MouseListener, KeyListener,
 	public boolean isLeftMouseDown() {
 		return mousePos_left != null;
 	}
-	
+
 	public boolean isLeftMouseDownButton() {
 		return leftMouseButton;
 	}
-	
-	
 
 	public Point getMousePosRight() {
 		return mousePos_right;
@@ -210,7 +208,7 @@ public class Controls implements MouseListener, KeyListener,
 		leftMouse_down = false;
 		return result;
 	}
-	
+
 	public boolean wasLeftMouseUp() {
 		boolean result = leftMouse_up;
 		leftMouse_up = false;
@@ -224,7 +222,7 @@ public class Controls implements MouseListener, KeyListener,
 	public void setFreeze() {
 		freeze = true;
 	}
-	
+
 	public boolean isFreeze() {
 		return freeze;
 	}
@@ -232,7 +230,7 @@ public class Controls implements MouseListener, KeyListener,
 	public void setBurn() {
 		burn = true;
 	}
-	
+
 	public boolean isBurn() {
 		return burn;
 	}

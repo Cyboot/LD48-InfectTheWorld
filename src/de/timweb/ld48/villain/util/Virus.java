@@ -91,8 +91,8 @@ public class Virus extends Entity {
 		for (Spawner e : spawner) {
 			double dist = e.getPos().distance(pos);
 			if (e.isWhite() && dist < MIN_DISTANCE * 3) {
-				e.attack((delta+level)/2, (color + 1) % 6);
-				System.out.println("attack white spawner");
+				e.attack((delta + level) / 2, (color + 1) % 6);
+//				System.out.println("attack white spawner");
 			}
 		}
 	}
@@ -120,7 +120,7 @@ public class Virus extends Entity {
 	@Override
 	protected void onKilled() {
 		SoundEffect.HURT.play();
-		System.out.println("Virus killed");
+//		System.out.println("Virus killed");
 	}
 
 	public void hurt(int delta) {
@@ -180,10 +180,10 @@ public class Virus extends Entity {
 		maxSpeed += 0.2;
 	}
 
-	public static void resetSpeed(){
+	public static void resetSpeed() {
 		maxSpeed = 2;
 	}
-	
+
 	public boolean isFrozen() {
 		return isFreezed;
 	}

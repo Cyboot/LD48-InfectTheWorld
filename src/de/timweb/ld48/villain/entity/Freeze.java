@@ -68,8 +68,8 @@ public class Freeze extends Entity {
 			g.drawImage(ImageLoader.special_ice, pos.x() - 100, pos.y() - 100,
 					null);
 		else
-			g.drawImage(ImageLoader.special_ice_trans, pos.x() - 100, pos.y() - 100,
-					null);
+			g.drawImage(ImageLoader.special_ice_trans, pos.x() - 100,
+					pos.y() - 100, null);
 	}
 
 }

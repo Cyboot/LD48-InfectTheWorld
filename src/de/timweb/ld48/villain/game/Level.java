@@ -9,12 +9,12 @@ public abstract class Level {
 	public abstract void update(int delta);
 
 	public abstract void render(Graphics g);
-	
-	protected void finish(){
+
+	protected void finish() {
 		finished = true;
 		SelectRect.s.setActive(false);
 	}
-	
+
 	public boolean isFinished() {
 		return finished;
 	}

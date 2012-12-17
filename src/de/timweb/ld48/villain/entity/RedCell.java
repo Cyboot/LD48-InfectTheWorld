@@ -17,11 +17,11 @@ public class RedCell extends Entity {
 		super(pos);
 
 		direction = Vector2d.randomNormalized();
-		if(direction.x < 0)
+		if (direction.x < 0)
 			direction.flipX();
-		if(direction.y < 0)
+		if (direction.y < 0)
 			direction.flipY();
-		
+
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class RedCell extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(img, pos.x()-size, pos.y()-size, null);
+		g.drawImage(img, pos.x() - size, pos.y() - size, null);
 	}
 
 }

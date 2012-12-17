@@ -84,12 +84,12 @@ public class ImageLoader {
 			button_pressed = readImage("button_pressed.png");
 			shade = readImage("shade.png");
 			tutorial = readImage("tutorial.png");
-			
+
 			special_ice = readImage("special_ice.png");
 			special_ice_trans = readImage("special_ice_trans.png");
 			special_fire = readImage("special_fire.png");
 			special_fire_trans = readImage("special_fire_trans.png");
-			
+
 			goat = readImage("goat.png");
 
 			// Worldlevel

@@ -52,8 +52,8 @@ public class Burn extends Entity {
 			g.drawImage(ImageLoader.special_fire, pos.x() - 100, pos.y() - 100,
 					null);
 		else
-			g.drawImage(ImageLoader.special_fire_trans, pos.x() - 100, pos.y() - 100,
-					null);
+			g.drawImage(ImageLoader.special_fire_trans, pos.x() - 100,
+					pos.y() - 100, null);
 	}
 
 }

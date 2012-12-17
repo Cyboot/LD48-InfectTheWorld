@@ -168,7 +168,7 @@ public class Gui {
 	}
 
 	public void deleteText() {
-		textTimeLeft  = -10;
+		textTimeLeft = -10;
 		timePassed = MAX_TIME;
 	}
 }

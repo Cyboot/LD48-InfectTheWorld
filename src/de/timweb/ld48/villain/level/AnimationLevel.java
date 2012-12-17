@@ -3,9 +3,7 @@ package de.timweb.ld48.villain.level;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
 
-import de.timweb.ld48.villain.game.Controls;
 import de.timweb.ld48.villain.game.Level;
 import de.timweb.ld48.villain.game.VillainCanvas;
 import de.timweb.ld48.villain.util.Gui;
@@ -33,8 +31,9 @@ public class AnimationLevel extends Level {
 			img1 = ImageLoader.human_level2_1;
 			img2 = ImageLoader.human_level2_2;
 			timeleft = 5 * 1000;
-			Gui.g.drawText(timeleft, "The liver will be the next organ to be destroyed", "                ",
-					"HARR HARR HARRR");
+			Gui.g.drawText(timeleft,
+					"The liver will be the next organ to be destroyed",
+					"                ", "HARR HARR HARRR");
 			break;
 		case 3:
 			img1 = ImageLoader.human_level3_1;
@@ -55,9 +54,9 @@ public class AnimationLevel extends Level {
 		if (timeleft < 0)
 			finish();
 
-//		if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER)) {
-//			finish();
-//		}
+		// if (Controls.c.wasKeyPressed(KeyEvent.VK_ENTER)) {
+		// finish();
+		// }
 	}
 
 	@Override
@@ -69,8 +68,9 @@ public class AnimationLevel extends Level {
 
 		g.setColor(Color.orange);
 		g.setFont(VillainCanvas.font_Big);
-//		g.drawString("Press <Enter> to continue", VillainCanvas.WIDTH / 2 - 80,
-//				VillainCanvas.HEIGHT - 30);
+		// g.drawString("Press <Enter> to continue", VillainCanvas.WIDTH / 2 -
+		// 80,
+		// VillainCanvas.HEIGHT - 30);
 	}
 
 	@Override

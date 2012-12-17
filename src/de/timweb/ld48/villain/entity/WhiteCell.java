@@ -40,9 +40,9 @@ public class WhiteCell extends Entity {
 
 	@Override
 	public void update(int delta) {
-		if(isFrozen)
+		if (isFrozen)
 			return;
-		
+
 		checkForEnemies(delta);
 		if (target != null) {
 			moveToTarget(delta);
@@ -176,23 +176,24 @@ public class WhiteCell extends Entity {
 	private void hurt(int i) {
 		health -= i;
 
-//		System.out.println(health);
-		
-		int hurtlevel = 6 - (int) (((float)health/START_HEALTH) *6);
-		
-		if(hurtlevel < 0)
+		// System.out.println(health);
+
+		int hurtlevel = 6 - (int) (((float) health / START_HEALTH) * 6);
+
+		if (hurtlevel < 0)
 			hurtlevel = 0;
-		if(hurtlevel >= 6)
+		if (hurtlevel >= 6)
 			hurtlevel = 5;
-		
-		if(this.hurtlevel != hurtlevel){
+
+		if (this.hurtlevel != hurtlevel) {
 			int x = hurtlevel % 3;
 			int y = hurtlevel / 3;
-			img = ImageLoader.getSubImage(ImageLoader.sprite_white_24, x, y, 24);
+			img = ImageLoader
+					.getSubImage(ImageLoader.sprite_white_24, x, y, 24);
 		}
-		
+
 		this.hurtlevel = hurtlevel;
-		
+
 		if (health < 0)
 			kill();
 
@@ -200,7 +201,7 @@ public class WhiteCell extends Entity {
 
 	@Override
 	protected void onKilled() {
-		if(!isKilledByFire)
+		if (!isKilledByFire)
 			Player.addMoney(10);
 	}
 
@@ -222,5 +223,5 @@ public class WhiteCell extends Entity {
 		super.kill();
 		isKilledByFire = true;
 	}
-	
+
 }

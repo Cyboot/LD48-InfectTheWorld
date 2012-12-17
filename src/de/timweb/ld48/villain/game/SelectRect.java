@@ -89,10 +89,10 @@ public class SelectRect {
 		return isFixed;
 	}
 
-	public synchronized boolean isWorking(){
+	public synchronized boolean isWorking() {
 		return !isFixed && point1 != null;
 	}
-	
+
 	/**
 	 * should be called after the Rectangle was read out
 	 */

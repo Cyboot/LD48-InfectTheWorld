@@ -10,8 +10,8 @@ import de.timweb.ld48.villain.game.VillainCanvas;
 public class VillainMain {
 
 	public static void main(String[] args) {
-		VillainCanvas canvas = new VillainCanvas(1280,720);
-		
+		VillainCanvas canvas = new VillainCanvas(1280, 720);
+
 		JFrame frame = new JFrame("Infect the World");
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(canvas);
@@ -22,7 +22,7 @@ public class VillainMain {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		canvas.start();
-		
+
 	}
-	
+
 }
