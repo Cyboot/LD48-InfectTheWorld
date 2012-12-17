@@ -119,7 +119,7 @@ public class Virus extends Entity {
 
 	@Override
 	protected void onKilled() {
-		// TODO: 91.a Sound + Effekt
+		SoundEffect.HURT.play();
 		System.out.println("Virus killed");
 	}
 

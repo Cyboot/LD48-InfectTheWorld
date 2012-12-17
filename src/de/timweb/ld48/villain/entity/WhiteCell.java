@@ -176,7 +176,7 @@ public class WhiteCell extends Entity {
 	private void hurt(int i) {
 		health -= i;
 
-		System.out.println(health);
+//		System.out.println(health);
 		
 		int hurtlevel = 6 - (int) (((float)health/START_HEALTH) *6);
 		

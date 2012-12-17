@@ -66,6 +66,7 @@ public class StartLevel extends BodyLevel {
 			g.drawImage(ImageLoader.tutorial, 0, 0, null);
 			break;
 		}
+		g.setColor(Color.orange);
 		g.setFont(VillainCanvas.font_Big);
 		g.drawString("Press <Enter> to continue", VillainCanvas.WIDTH / 2 - 80,
 				VillainCanvas.HEIGHT - 30);

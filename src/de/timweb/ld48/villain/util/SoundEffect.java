@@ -111,4 +111,12 @@ public enum SoundEffect {
 			isMuted = false;
 		}
 	}
+
+	public static boolean isMusicMuted() {
+		return isMusicMuted;
+	}
+	public static boolean isSoundMuted() {
+		return isMuted;
+	}
+	
 }

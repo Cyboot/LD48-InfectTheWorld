@@ -47,6 +47,32 @@ public class VillainCanvas extends Canvas implements Runnable {
 	public void start() {
 		Thread t = new Thread(this);
 		initFont();
+
+		try {
+			createBufferStrategy(3);
+			Graphics g = getBufferStrategy().getDrawGraphics();
+			
+			if (g instanceof Graphics2D) {
+				Graphics2D g2d = (Graphics2D) g;
+				try {
+					g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+							RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				} catch (Exception e) {
+					System.err.println("Antialias failed for displaying the Font");
+				}
+			}
+			
+			g.setColor(Color.black);
+			g.setFont(font_Big);
+			g.drawString("loading Images...", WIDTH / 2 - 50, HEIGHT/2 - 10);
+			
+			g.dispose();
+			Toolkit.getDefaultToolkit().sync();
+			
+			getBufferStrategy().show();
+		} catch (Exception e) {
+		}
+
 		ImageLoader.init();
 		SoundEffect.init();
 
@@ -160,8 +186,17 @@ public class VillainCanvas extends Canvas implements Runnable {
 		g.setFont(font);
 		g.drawString("FPS: " + (int) fps, 5, 13);
 
-		g.drawString("Press M to mute/unmute music", WIDTH - 190, HEIGHT - 30);
-		g.drawString("Press S to mute/unmute sound", WIDTH - 190, HEIGHT - 10);
+		String muted = "mute";
+		if(SoundEffect.isMusicMuted())
+			muted = "unmute";
+		
+		g.drawString("Press M to "+muted+" music", WIDTH - 190, HEIGHT - 30);
+		
+		
+		muted = "mute";
+		if(SoundEffect.isSoundMuted())
+			muted = "unmute";
+		g.drawString("Press S to "+muted+" sound", WIDTH - 190, HEIGHT - 10);
 
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();

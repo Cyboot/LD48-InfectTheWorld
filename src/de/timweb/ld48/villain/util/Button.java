@@ -85,6 +85,9 @@ public class Button {
 	}
 
 	private void waspressed() {
+		
+		SoundEffect.LEVELUP.play();
+		
 		// Dirty dirty (no time)
 		if (text.equals("Strength")) {
 			Virus.setLevel(Virus.getLevel() + 1);
