@@ -13,10 +13,12 @@ import de.timweb.ld48.villain.util.Vector2d;
 import de.timweb.ld48.villain.util.Virus;
 
 public class Spawner extends Entity {
-	public static final int MAX_SPAWN = 15 * 1000;
+	public static final int MAX_SPAWN = 5 * 1000;
 	public static final int HEALTH = 10 * 1000;
+	private static final int VIRUS_SPAWN = MAX_SPAWN;
+	private static final int SPAWN_LEVELUP_DELTA = 250;
 
-	private static int maxVirusspawn = MAX_SPAWN / 2;
+	private static int maxVirusspawn = VIRUS_SPAWN;
 
 	private int health = 10 * 1000;
 	private BufferedImage img;
@@ -95,7 +97,7 @@ public class Spawner extends Entity {
 	public void attack(int delta, int color) {
 		health -= delta;
 
-//		System.out.println("spawner-health: " + health);
+		// System.out.println("spawner-health: " + health);
 
 		if (health <= 0) {
 			health = HEALTH;
@@ -104,7 +106,7 @@ public class Spawner extends Entity {
 	}
 
 	public static void increaseSpawnRate() {
-		maxVirusspawn -= 500;
+		maxVirusspawn -= SPAWN_LEVELUP_DELTA;
 		if (maxVirusspawn < 1000) {
 			maxVirusspawn = 1000;
 		}
@@ -120,7 +122,7 @@ public class Spawner extends Entity {
 	}
 
 	public static void reset() {
-		maxVirusspawn = MAX_SPAWN / 3;
+		maxVirusspawn = VIRUS_SPAWN;
 	}
 
 }

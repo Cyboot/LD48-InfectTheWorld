@@ -34,6 +34,8 @@ public class WhiteCell extends Entity {
 	public WhiteCell(Vector2d pos) {
 		super(pos);
 
+		
+		health = START_HEALTH + Virus.getLevel() * 2000;
 		isDefender = Math.random() > 0.2;
 		direction = Vector2d.randomNormalized();
 	}

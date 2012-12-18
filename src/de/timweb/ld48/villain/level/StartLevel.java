@@ -71,6 +71,8 @@ public class StartLevel extends BodyLevel {
 		}
 		g.setColor(Color.orange);
 		g.setFont(VillainCanvas.font_Big);
+		g.drawString("More difficult version (for Ozl)", VillainCanvas.WIDTH / 2 - 80,
+				VillainCanvas.HEIGHT - 60);
 		g.drawString("Press <Enter> to continue", VillainCanvas.WIDTH / 2 - 80,
 				VillainCanvas.HEIGHT - 30);
 	}
