@@ -105,8 +105,6 @@ public class Antibody extends Entity {
 
 		double minDist = Double.MAX_VALUE;
 
-		// TODO: 92. Antibody nur an Virus anhefen, nicht drauf stehen
-
 		Entity nearest = null;
 		for (Virus v : virus) {
 			// only search for right color

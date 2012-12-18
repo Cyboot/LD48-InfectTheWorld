@@ -22,7 +22,6 @@ public abstract class Entity {
 	public abstract void render(Graphics g);
 
 	protected void onKilled() {
-		// TODO: 90. sound here
 		// TODO: 91. grafikeffekte
 	}
 

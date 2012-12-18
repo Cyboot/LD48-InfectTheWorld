@@ -45,8 +45,6 @@ public class Gui {
 		Button.special_burn.update(delta);
 		Button.special_freeze.update(delta);
 		Button.special_maxSpawn.update(delta);
-
-		// TODO: 99. (special attacks)
 	}
 
 	private void writeText(int delta) {

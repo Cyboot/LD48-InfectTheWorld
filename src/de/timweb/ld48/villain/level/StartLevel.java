@@ -43,7 +43,7 @@ public class StartLevel extends BodyLevel {
 		super.render(g);
 
 		g.drawImage(ImageLoader.shade, 0, 0, null);
-		g.drawImage(ImageLoader.shade, 0, 0, null);
+//		g.drawImage(ImageLoader.shade, 0, 0, null);
 
 		g.drawImage(ImageLoader.goat, 0, VillainCanvas.HEIGHT - 81, null);
 
