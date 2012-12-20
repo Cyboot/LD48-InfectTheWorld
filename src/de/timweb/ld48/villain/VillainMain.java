@@ -12,7 +12,7 @@ public class VillainMain {
 	public static void main(String[] args) {
 		VillainCanvas canvas = new VillainCanvas(1280, 720);
 
-		JFrame frame = new JFrame("Infect the World");
+		JFrame frame = new JFrame("Infect the World - Hardcore Mode");
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(canvas);
 		frame.setContentPane(panel);

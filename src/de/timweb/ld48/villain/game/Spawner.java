@@ -47,7 +47,7 @@ public class Spawner extends Entity {
 			if (lastSpawn > MAX_SPAWN) {
 				level.addWhiteCell(new WhiteCell(getPos().copy()));
 
-				if (Math.random() > 0.5) {
+				if (Math.random() > 0.75) {
 					List<Spawner> spawner = level.getSpawner();
 
 					int colorAnti = 0;
